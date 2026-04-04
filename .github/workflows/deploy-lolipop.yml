@@ -1,4 +1,7 @@
-# https://www.digitalsenior.jp/junguritask/ へデプロイ（FTP）
+# https://junguritask.digitalsenior.jp/ 等へデプロイ（FTP）
+#
+# ビルド後は index.html と同じ階層の *.js / *.css（ハッシュ付きファイル名）が必須。
+# index.html のみだと真っ白になる。FTP がサブフォルダ不可のときは vite の assetsDir: '' でフラット出力。
 #
 # 必須 Secrets（名前は大文字小文字まで一致させる）:
 #   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
@@ -27,8 +30,8 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      - name: dist の内容をログに出す（アップロード対象の確認用）
-        run: ls -la dist/
+      - name: dist 配下の全ファイルをログに出す（.js / .css を確認）
+        run: ls -laR dist/
 
       - name: Upload dist via FTP
         # action.yml が node20 の間は GitHub が Node 24 で実行する旨の注釈が出る場合あり（上流対応待ち）
@@ -42,3 +45,4 @@ jobs:
           # Secret 未作成だと空文字になり action のデフォルト ./ が効かないため、式でフォールバックする
           server-dir: ${{ secrets.FTP_SERVER_DIR != '' && secrets.FTP_SERVER_DIR || './' }}
           dangerous-clean-slate: false
+          # 上がったファイルと状態ファイルだけがおかしいとき: サーバーの .ftp-deploy-sync-state.json を消してから再デプロイ

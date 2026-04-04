@@ -1,28 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { viteSingleFile } from 'vite-plugin-singlefile'
 
-/** file:// で開くとき、type=module がブロックされるブラウザ向けに外す（バンドルは import なしの1塊） */
-function scriptWithoutModuleType() {
-  return {
-    name: 'script-without-module-type',
-    enforce: 'post',
-    generateBundle(_opts, bundle) {
-      for (const name of Object.keys(bundle)) {
-        const chunk = bundle[name]
-        if (chunk.type === 'asset' && name.endsWith('.html') && typeof chunk.source === 'string') {
-          chunk.source = chunk.source.replace(/<script type="module"([^>]*)>/g, '<script$1>')
-        }
-      }
-    },
-  }
-}
-
+// インライン script はホストの CSP でブロックされうるため、分割バンドルを使う。
+// assets/ サブフォルダを作らない（一部の FTP はディレクトリ作成に失敗し JS が上がらない）。
 export default defineConfig({
   base: './',
-  plugins: [
-    react(),
-    viteSingleFile({ removeViteModuleLoader: true }),
-    scriptWithoutModuleType(),
-  ],
+  plugins: [react()],
+  build: {
+    assetsDir: '',
+  },
 })
