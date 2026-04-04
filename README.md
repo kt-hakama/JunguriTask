@@ -58,7 +58,7 @@ Windows では **`preview-local.bat`** をダブルクリックしてもプレ�
 
 ## 本番デプロイ（ロリポップ）
 
-公開URL: **https://junguritask.digitalsenior.jp/**
+公開URL: **https://www.digitalsenior.jp/junguritask/**
 
 `main` ブランチへ push すると GitHub Actions（`.github/workflows/deploy-lolipop.yml`）が `dist/` を FTP でアップロードします。
 
@@ -71,13 +71,13 @@ Windows では **`preview-local.bat`** をダブルクリックしてもプレ�
 | `FTP_SERVER` | ロリポップの **FTP サーバー名（ホスト名）** のみ。例: `ftp.lolipop.jp`（`https://` は付けない） |
 | `FTP_USERNAME` | **必須。** ロリポップの FTP **ユーザー名**（パネルの「FTP」に表示されるログイン名） |
 | `FTP_PASSWORD` | FTP パスワード |
-| `FTP_SERVER_DIR` | （任意）アップロード先フォルダ。FTP でログインしたときの **junguritask のドキュメントルート** までのパス。例: サブドメイン用フォルダが `public_html/junguritask.digitalsenior.jp/` ならその相対パス。ログイン直後がもうそのフォルダなら空のままか、パネルの案内に従ってください。 |
+| `FTP_SERVER_DIR` | （任意）アップロード先フォルダ。`www.digitalsenior.jp` 用の **`junguritask/` 公開フォルダ** まで、FTP ログイン直後からの相対パス（末尾 `/`）。例: `junguritask/` または `public_html/junguritask/`（接続先の階層に合わせる）。ログイン直後がもうそのフォルダなら `./` 相当でよい。 |
 
 `username` エラーが出るときは、**`FTP_USERNAME` という名前の Secret が存在するか**、**値が空でないか**を確認してください。
 
-サブドメインのドキュメントルートはロリポップの「ドメイン設定」「ファイルマネージャー」の説明で確認してください。
+`www` 用の公開（アップロード）フォルダ `junguritask/` の場所は、ロリポップの「ドメイン設定」「ファイルマネージャー」の説明で確認してください。
 
 ### 補足
 
-- このURLはサブドメインの **ルート** で表示される想定のため、`vite.config.js` の `base` は **`./`（相対パス）** にしています。
+- 本番は **ドメイン直下ではなく `/junguritask/` サブフォルダ** で表示される想定のため、`vite.config.js` の `base` は **`./`（相対パス）** にしています（単一 HTML ビルドと相性がよいです）。
 - 初回だけ手動で FTP 接続し、アップロード先フォルダが合っているか確認すると安全です。

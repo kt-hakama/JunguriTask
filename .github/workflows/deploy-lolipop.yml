@@ -1,4 +1,4 @@
-# https://junguritask.digitalsenior.jp/ へデプロイ（FTP）
+# https://www.digitalsenior.jp/junguritask/ へデプロイ（FTP）
 #
 # 必須 Secrets（名前は大文字小文字まで一致させる）:
 #   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
