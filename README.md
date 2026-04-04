@@ -44,12 +44,16 @@ npm run build
 
 ### GitHub Secrets（リポジトリの Settings → Secrets and variables → Actions）
 
+**名前は表のとおり一字一句同じにしてください**（`FTP_USER` や `ftp_username` など別名だと動きません）。
+
 | Name | 内容 |
 |------|------|
-| `FTP_SERVER` | ロリポップの FTP サーバー名（コントロールパネル表記） |
-| `FTP_USERNAME` | FTP ユーザー名 |
+| `FTP_SERVER` | ロリポップの **FTP サーバー名（ホスト名）** のみ。例: `ftp.lolipop.jp`（`https://` は付けない） |
+| `FTP_USERNAME` | **必須。** ロリポップの FTP **ユーザー名**（パネルの「FTP」に表示されるログイン名） |
 | `FTP_PASSWORD` | FTP パスワード |
 | `FTP_SERVER_DIR` | （任意）アップロード先フォルダ。FTP でログインしたときの **junguritask のドキュメントルート** までのパス。例: サブドメイン用フォルダが `public_html/junguritask.digitalsenior.jp/` ならその相対パス。ログイン直後がもうそのフォルダなら空のままか、パネルの案内に従ってください。 |
+
+`username` エラーが出るときは、**`FTP_USERNAME` という名前の Secret が存在するか**、**値が空でないか**を確認してください。
 
 サブドメインのドキュメントルートはロリポップの「ドメイン設定」「ファイルマネージャー」の説明で確認してください。
 
