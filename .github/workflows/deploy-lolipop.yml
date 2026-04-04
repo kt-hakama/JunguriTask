@@ -2,13 +2,15 @@
 #
 # 必須 Secrets（名前は大文字小文字まで一致させる）:
 #   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
-# 任意: FTP_SERVER_DIR
+# 任意: FTP_SERVER_DIR（末尾は / 必須。未設定時は ./＝FTPログイン直下）
+# 任意: FTP_PROTOCOL（ftp または ftps。未設定時は ftp）
 
 name: Deploy to Lolipop
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -24,6 +26,9 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+      - name: dist の内容をログに出す（アップロード対象の確認用）
+        run: ls -la dist/
+
       - name: Upload dist via FTP
         # action.yml が node20 の間は GitHub が Node 24 で実行する旨の注釈が出る場合あり（上流対応待ち）
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
@@ -31,8 +36,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ secrets.FTP_PROTOCOL || 'ftp' }}
           local-dir: ./dist/
-          # ロリポップの「junguritask」用ドキュメントルートへの相対パス（FTP接続先からのパス）
-          # 未設定のときは FTP ログイン直下にアップロードされます
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          # Secret 未作成だと空文字になり action のデフォルト ./ が効かないため、式でフォールバックする
+          server-dir: ${{ secrets.FTP_SERVER_DIR != '' && secrets.FTP_SERVER_DIR || './' }}
           dangerous-clean-slate: false
