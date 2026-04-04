@@ -6,11 +6,17 @@ const defaultData = {
   lists: [],
 };
 
+function normalizeData(parsed) {
+  if (!parsed || typeof parsed !== 'object') return defaultData;
+  if (!Array.isArray(parsed.lists)) return defaultData;
+  return { lists: parsed.lists };
+}
+
 export function useLocalStorage() {
   const [data, setData] = useState(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      return stored ? JSON.parse(stored) : defaultData;
+      return stored ? normalizeData(JSON.parse(stored)) : defaultData;
     } catch {
       return defaultData;
     }

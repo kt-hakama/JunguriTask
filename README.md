@@ -29,6 +29,26 @@ npm run build
 
 ビルド結果は `dist/` に出力されます。
 
+### ビルド後の動作確認
+
+`npm run build` では **1枚の `dist/index.html` に JS/CSS が埋め込まれた形**で出力されます（`vite-plugin-singlefile`）。
+
+- **`dist/index.html` をダブルクリックして開く**（`file://`）でも、多くの環境で表示されます。
+- より確実な確認・開発時は次のとおり。
+
+```bash
+npm run preview
+```
+
+ブラウザで **http://localhost:4173** が開きます。
+
+- 開発中: `npm run dev`（http://localhost:5173）
+- 本番に近い確認: `npm run build` のあと `npm run preview` または `dist/index.html` を直接開く
+
+Windows では **`preview-local.bat`** をダブルクリックしてもプレビューを起動できます。
+
+※ ブラウザや設定によっては `file://` で `localStorage` が制限されることがあります。その場合は `npm run preview` を使うか、本番 URL で確認してください。
+
 ## 技術スタック
 
 - React 18 (Hooks)
@@ -59,5 +79,5 @@ npm run build
 
 ### 補足
 
-- このURLはサブドメインの **ルート** で表示される想定のため、`vite.config.js` の `base` は `/` のままです。
+- このURLはサブドメインの **ルート** で表示される想定のため、`vite.config.js` の `base` は **`./`（相対パス）** にしています。
 - 初回だけ手動で FTP 接続し、アップロード先フォルダが合っているか確認すると安全です。
