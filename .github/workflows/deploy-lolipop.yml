@@ -13,13 +13,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      # Node 20 非推奨警告の緩和（GitHub の案内に沿う）
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: "24"
           cache: "npm"
@@ -28,7 +25,8 @@ jobs:
       - run: npm run build
 
       - name: Upload dist via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        # action.yml が node20 の間は GitHub が Node 24 で実行する旨の注釈が出る場合あり（上流対応待ち）
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
