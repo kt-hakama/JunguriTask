@@ -35,3 +35,25 @@ npm run build
 - Vite
 - Tailwind CSS
 - localStorage（バックエンドなし）
+
+## 本番デプロイ（ロリポップ）
+
+公開URL: **https://junguritask.digitalsenior.jp/**
+
+`main` ブランチへ push すると GitHub Actions（`.github/workflows/deploy-lolipop.yml`）が `dist/` を FTP でアップロードします。
+
+### GitHub Secrets（リポジトリの Settings → Secrets and variables → Actions）
+
+| Name | 内容 |
+|------|------|
+| `FTP_SERVER` | ロリポップの FTP サーバー名（コントロールパネル表記） |
+| `FTP_USERNAME` | FTP ユーザー名 |
+| `FTP_PASSWORD` | FTP パスワード |
+| `FTP_SERVER_DIR` | （任意）アップロード先フォルダ。FTP でログインしたときの **junguritask のドキュメントルート** までのパス。例: サブドメイン用フォルダが `public_html/junguritask.digitalsenior.jp/` ならその相対パス。ログイン直後がもうそのフォルダなら空のままか、パネルの案内に従ってください。 |
+
+サブドメインのドキュメントルートはロリポップの「ドメイン設定」「ファイルマネージャー」の説明で確認してください。
+
+### 補足
+
+- このURLはサブドメインの **ルート** で表示される想定のため、`vite.config.js` の `base` は `/` のままです。
+- 初回だけ手動で FTP 接続し、アップロード先フォルダが合っているか確認すると安全です。
