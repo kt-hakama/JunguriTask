@@ -9,7 +9,8 @@ name: Deploy to Lolipop
 
 on:
   push:
-    branches: [main]
+    # GitHub のデフォルトブランチが main / master のどちらでも拾う
+    branches: [main, master]
   workflow_dispatch:
 
 jobs:
