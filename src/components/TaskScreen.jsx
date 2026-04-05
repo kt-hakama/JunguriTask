@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { generateId } from '../utils/id'
+import { PencilIcon, TrashIcon } from './icons'
 
 export default function TaskScreen({ list, setData, onBack }) {
   if (!list) return null
@@ -154,9 +155,10 @@ export default function TaskScreen({ list, setData, onBack }) {
             <button
               type="button"
               onClick={startListNameEdit}
-              className="text-sm text-stone-500 hover:text-stone-700 shrink-0 py-2"
+              className="p-2 text-stone-400 hover:text-stone-700 shrink-0 rounded-lg flex items-center justify-center"
+              aria-label="リスト名を編集"
             >
-              編集
+              <PencilIcon className="h-5 w-5" />
             </button>
           </>
         )}
@@ -299,13 +301,14 @@ function FirstTaskCard({ task, onComplete, onSkip, onDelete, onRename, showSkip 
           </div>
 
           {showActions && (
-            <div className="mt-4 pt-4 border-t border-stone-100 flex flex-col gap-3">
+            <div className="mt-4 pt-4 border-t border-stone-100 flex flex-col gap-1">
               <button
                 type="button"
                 onClick={startEdit}
-                className="text-sm text-stone-600 text-left"
+                className="p-2 text-stone-500 hover:text-stone-700 rounded-lg flex items-center gap-2"
+                aria-label="名前を編集"
               >
-                名前を編集
+                <PencilIcon className="h-5 w-5 shrink-0" />
               </button>
               <button
                 type="button"
@@ -313,9 +316,10 @@ function FirstTaskCard({ task, onComplete, onSkip, onDelete, onRename, showSkip 
                   onDelete(task.id)
                   setShowActions(false)
                 }}
-                className="text-sm text-red-500 text-left"
+                className="p-2 text-red-500 hover:text-red-600 rounded-lg flex items-center gap-2"
+                aria-label="タスクを削除"
               >
-                タスクを削除
+                <TrashIcon className="h-5 w-5 shrink-0" />
               </button>
             </div>
           )}
@@ -406,18 +410,18 @@ function TaskRow({ task, onDelete, onRename }) {
             <button
               type="button"
               onClick={startEdit}
-              className="p-1.5 text-stone-400 hover:text-stone-700 text-sm"
+              className="p-1.5 text-stone-400 hover:text-stone-700 rounded-lg flex items-center justify-center"
               aria-label="編集"
             >
-              編集
+              <PencilIcon className="h-5 w-5" />
             </button>
             <button
               type="button"
               onClick={() => setShowDelete(true)}
-              className="p-1.5 text-stone-400 hover:text-red-500 text-sm"
+              className="p-1.5 text-stone-400 hover:text-red-500 rounded-lg flex items-center justify-center"
               aria-label="削除"
             >
-              削除
+              <TrashIcon className="h-5 w-5" />
             </button>
           </div>
         </>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { generateId } from '../utils/id'
 import { resetAllData } from '../hooks/useLocalStorage'
+import { PencilIcon, TrashIcon } from './icons'
 
 const MAX_LISTS = 3
 
@@ -106,20 +107,22 @@ export default function ListSelection({ lists, setData, onOpenList }) {
                 >
                   {list.name}
                 </button>
-                <div className="flex gap-1 pr-2">
+                <div className="flex gap-0.5 pr-2">
                   <button
+                    type="button"
                     onClick={() => handleStartRename(list)}
-                    className="p-2 text-stone-400 hover:text-stone-600 text-sm"
+                    className="p-2 text-stone-400 hover:text-stone-600 rounded-lg flex items-center justify-center"
                     aria-label="名前を変更"
                   >
-                    名前を変更
+                    <PencilIcon className="h-5 w-5" />
                   </button>
                   <button
+                    type="button"
                     onClick={() => handleDeleteList(list.id)}
-                    className="p-2 text-stone-400 hover:text-red-500 text-sm"
+                    className="p-2 text-stone-400 hover:text-red-500 rounded-lg flex items-center justify-center"
                     aria-label="リストを削除"
                   >
-                    削除
+                    <TrashIcon className="h-5 w-5" />
                   </button>
                 </div>
               </div>
