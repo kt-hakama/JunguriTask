@@ -46,3 +46,4 @@ jobs:
           server-dir: ${{ secrets.FTP_SERVER_DIR != '' && secrets.FTP_SERVER_DIR || './' }}
           dangerous-clean-slate: false
           # 上がったファイルと状態ファイルだけがおかしいとき: サーバーの .ftp-deploy-sync-state.json を消してから再デプロイ
+          # ビルドのたびに index-*.js のファイル名が変わる。index.html だけ更新すると古い JS が読まれ続けるので、dist 内の .js を必ず一緒に上げる。

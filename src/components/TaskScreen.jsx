@@ -205,16 +205,21 @@ export default function TaskScreen({ list, setData, onBack }) {
 
 function CompletionDateLine({ completedAt, className = '' }) {
   if (completedAt == null) return null
-  const text = formatCompletionDate(completedAt)
+  const ms = Number(completedAt)
+  if (!Number.isFinite(ms)) return null
+  const text = formatCompletionDate(ms)
   if (!text) return null
+  const iso = new Date(ms).toISOString()
   return (
     <p
-      className={`flex items-center gap-1.5 text-sm text-stone-400 ${className}`}
+      className={`flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-sm text-stone-400 w-full min-w-0 ${className}`}
       role="status"
       aria-label={`最終完了 ${text}`}
     >
       <ClockIcon className="h-4 w-4 shrink-0" />
-      <span className="tabular-nums">{text}</span>
+      <time dateTime={iso} className="tabular-nums min-w-0">
+        {text}
+      </time>
     </p>
   )
 }
