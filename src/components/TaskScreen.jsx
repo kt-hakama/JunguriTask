@@ -87,6 +87,19 @@ export default function TaskScreen({ list, setData, onBack }) {
     }))
   }
 
+  /** 「このあと」同士のみ入れ替え。tasks[0] とは入れ替えない。 */
+  const handleMoveTaskInTail = (taskId, direction) => {
+    updateList((l) => {
+      const i = l.tasks.findIndex((t) => t.id === taskId)
+      if (i < 1) return l
+      const j = direction === 'up' ? i - 1 : i + 1
+      if (j < 1 || j >= l.tasks.length) return l
+      const next = [...l.tasks]
+      ;[next[i], next[j]] = [next[j], next[i]]
+      return { ...l, tasks: next }
+    })
+  }
+
   const startListNameEdit = () => {
     setListNameDraft(list.name)
     setListNameEditing(true)
@@ -184,14 +197,21 @@ export default function TaskScreen({ list, setData, onBack }) {
             {remainingTasks.length > 0 && (
               <div className="space-y-2 animate-task-enter">
                 <p className="text-sm text-stone-400 mb-3">このあと</p>
-                {remainingTasks.map((task) => (
-                  <TaskRow
-                    key={task.id}
-                    task={task}
-                    onDelete={handleDeleteTask}
-                    onRename={handleRenameTask}
-                  />
-                ))}
+                {remainingTasks.map((task) => {
+                  const idx = tasks.findIndex((t) => t.id === task.id)
+                  return (
+                    <TaskRow
+                      key={task.id}
+                      task={task}
+                      onDelete={handleDeleteTask}
+                      onRename={handleRenameTask}
+                      canMoveUp={idx >= 2}
+                      canMoveDown={idx >= 1 && idx < tasks.length - 1}
+                      onMoveUp={() => handleMoveTaskInTail(task.id, 'up')}
+                      onMoveDown={() => handleMoveTaskInTail(task.id, 'down')}
+                    />
+                  )
+                })}
               </div>
             )}
 
@@ -370,7 +390,15 @@ function FirstTaskCard({ task, onComplete, onSkip, onDelete, onRename, showSkip 
   )
 }
 
-function TaskRow({ task, onDelete, onRename }) {
+function TaskRow({
+  task,
+  onDelete,
+  onRename,
+  canMoveUp,
+  canMoveDown,
+  onMoveUp,
+  onMoveDown,
+}) {
   const [showDelete, setShowDelete] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editName, setEditName] = useState('')
@@ -422,35 +450,59 @@ function TaskRow({ task, onDelete, onRename }) {
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-between gap-2 min-w-0">
-            <button
-              type="button"
-              onClick={startEdit}
-              className="text-stone-600 text-sm truncate flex-1 min-w-0 text-left rounded-lg py-1.5 pl-0 pr-2 hover:bg-stone-50 active:bg-stone-100"
-              aria-label="タスク名を編集（タップ）"
-            >
-              {task.name}
-            </button>
-            <div className="flex items-center shrink-0 gap-1">
+          <div className="flex items-stretch gap-2 min-w-0">
+            <div className="flex flex-col justify-center gap-1 shrink-0">
               <button
                 type="button"
-                onClick={startEdit}
-                className="p-1.5 text-stone-400 hover:text-stone-700 rounded-lg flex items-center justify-center"
-                aria-label="編集"
+                disabled={!canMoveUp}
+                onClick={onMoveUp}
+                className="min-h-9 px-2 rounded-lg border border-stone-200 text-xs font-medium text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                aria-label="順番を上へ"
               >
-                <PencilIcon className="h-5 w-5" />
+                上へ
               </button>
               <button
                 type="button"
-                onClick={() => setShowDelete(true)}
-                className="p-1.5 text-stone-400 hover:text-red-500 rounded-lg flex items-center justify-center"
-                aria-label="削除"
+                disabled={!canMoveDown}
+                onClick={onMoveDown}
+                className="min-h-9 px-2 rounded-lg border border-stone-200 text-xs font-medium text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                aria-label="順番を下へ"
               >
-                <TrashIcon className="h-5 w-5" />
+                下へ
               </button>
             </div>
+            <div className="flex-1 min-w-0 flex flex-col gap-2">
+              <div className="flex items-center justify-between gap-2 min-w-0">
+                <button
+                  type="button"
+                  onClick={startEdit}
+                  className="text-stone-600 text-sm truncate flex-1 min-w-0 text-left rounded-lg py-1.5 pl-0 pr-2 hover:bg-stone-50 active:bg-stone-100"
+                  aria-label="タスク名を編集（タップ）"
+                >
+                  {task.name}
+                </button>
+                <div className="flex items-center shrink-0 gap-1">
+                  <button
+                    type="button"
+                    onClick={startEdit}
+                    className="p-1.5 text-stone-400 hover:text-stone-700 rounded-lg flex items-center justify-center"
+                    aria-label="編集"
+                  >
+                    <PencilIcon className="h-5 w-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowDelete(true)}
+                    className="p-1.5 text-stone-400 hover:text-red-500 rounded-lg flex items-center justify-center"
+                    aria-label="削除"
+                  >
+                    <TrashIcon className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
+              <CompletionDateLine completedAt={task.lastCompletedAt} />
+            </div>
           </div>
-          <CompletionDateLine completedAt={task.lastCompletedAt} />
         </>
       )}
       {showDelete && (
