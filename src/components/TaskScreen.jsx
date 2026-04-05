@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { generateId } from '../utils/id'
-import { PencilIcon, TrashIcon } from './icons'
+import { PencilIcon, TrashIcon, ClockIcon } from './icons'
+import { formatCompletionDate } from '../utils/formatCompletionDate'
 
 export default function TaskScreen({ list, setData, onBack }) {
   if (!list) return null
@@ -202,6 +203,22 @@ export default function TaskScreen({ list, setData, onBack }) {
   )
 }
 
+function CompletionDateLine({ completedAt, className = '' }) {
+  if (completedAt == null) return null
+  const text = formatCompletionDate(completedAt)
+  if (!text) return null
+  return (
+    <p
+      className={`flex items-center gap-1.5 text-sm text-stone-400 ${className}`}
+      role="status"
+      aria-label={`最終完了 ${text}`}
+    >
+      <ClockIcon className="h-4 w-4 shrink-0" />
+      <span className="tabular-nums">{text}</span>
+    </p>
+  )
+}
+
 function EmptyState({ onAddTask }) {
   const [name, setName] = useState('')
 
@@ -300,6 +317,8 @@ function FirstTaskCard({ task, onComplete, onSkip, onDelete, onRename, showSkip 
             </button>
           </div>
 
+          <CompletionDateLine completedAt={task.lastCompletedAt} className="mt-3" />
+
           {showActions && (
             <div className="mt-4 pt-4 border-t border-stone-100 flex flex-col gap-1">
               <button
@@ -368,7 +387,7 @@ function TaskRow({ task, onDelete, onRename }) {
   }
 
   return (
-    <div className="flex items-center justify-between bg-white rounded-xl px-4 py-3 border border-stone-100 shadow-sm transition-opacity duration-250 gap-2">
+    <div className="flex flex-col gap-2 bg-white rounded-xl px-4 py-3 border border-stone-100 shadow-sm transition-opacity duration-250">
       {isEditing ? (
         <div className="flex flex-col gap-2 w-full min-w-0">
           <input
@@ -398,32 +417,35 @@ function TaskRow({ task, onDelete, onRename }) {
         </div>
       ) : (
         <>
-          <button
-            type="button"
-            onClick={startEdit}
-            className="text-stone-600 text-sm truncate flex-1 min-w-0 text-left rounded-lg py-1.5 pl-0 pr-2 hover:bg-stone-50 active:bg-stone-100"
-            aria-label="タスク名を編集（タップ）"
-          >
-            {task.name}
-          </button>
-          <div className="flex items-center shrink-0 gap-1">
+          <div className="flex items-center justify-between gap-2 min-w-0">
             <button
               type="button"
               onClick={startEdit}
-              className="p-1.5 text-stone-400 hover:text-stone-700 rounded-lg flex items-center justify-center"
-              aria-label="編集"
+              className="text-stone-600 text-sm truncate flex-1 min-w-0 text-left rounded-lg py-1.5 pl-0 pr-2 hover:bg-stone-50 active:bg-stone-100"
+              aria-label="タスク名を編集（タップ）"
             >
-              <PencilIcon className="h-5 w-5" />
+              {task.name}
             </button>
-            <button
-              type="button"
-              onClick={() => setShowDelete(true)}
-              className="p-1.5 text-stone-400 hover:text-red-500 rounded-lg flex items-center justify-center"
-              aria-label="削除"
-            >
-              <TrashIcon className="h-5 w-5" />
-            </button>
+            <div className="flex items-center shrink-0 gap-1">
+              <button
+                type="button"
+                onClick={startEdit}
+                className="p-1.5 text-stone-400 hover:text-stone-700 rounded-lg flex items-center justify-center"
+                aria-label="編集"
+              >
+                <PencilIcon className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowDelete(true)}
+                className="p-1.5 text-stone-400 hover:text-red-500 rounded-lg flex items-center justify-center"
+                aria-label="削除"
+              >
+                <TrashIcon className="h-5 w-5" />
+              </button>
+            </div>
           </div>
+          <CompletionDateLine completedAt={task.lastCompletedAt} />
         </>
       )}
       {showDelete && (
