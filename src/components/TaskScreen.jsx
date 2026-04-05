@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { generateId } from '../utils/id'
-import { PencilIcon, TrashIcon, ClockIcon } from './icons'
+import { PencilIcon, TrashIcon, ClockIcon, ArrowUpIcon, ArrowDownIcon } from './icons'
 import { formatCompletionDate } from '../utils/formatCompletionDate'
 
 export default function TaskScreen({ list, setData, onBack }) {
@@ -456,19 +456,19 @@ function TaskRow({
                 type="button"
                 disabled={!canMoveUp}
                 onClick={onMoveUp}
-                className="min-h-9 px-2 rounded-lg border border-stone-200 text-xs font-medium text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                className="min-h-9 min-w-9 flex items-center justify-center rounded-lg border border-stone-200 text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                 aria-label="順番を上へ"
               >
-                上へ
+                <ArrowUpIcon className="h-5 w-5" />
               </button>
               <button
                 type="button"
                 disabled={!canMoveDown}
                 onClick={onMoveDown}
-                className="min-h-9 px-2 rounded-lg border border-stone-200 text-xs font-medium text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                className="min-h-9 min-w-9 flex items-center justify-center rounded-lg border border-stone-200 text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                 aria-label="順番を下へ"
               >
-                下へ
+                <ArrowDownIcon className="h-5 w-5" />
               </button>
             </div>
             <div className="flex-1 min-w-0 flex flex-col gap-2">
