@@ -9,7 +9,11 @@ export const messages = {
       cancel: 'キャンセル',
       delete: '削除する',
     },
-    lang: { switch: '言語', ja: '日本語', en: 'English' },
+    lang: {
+      switch: '言語',
+      labelJa: '日本語',
+      labelEn: 'English',
+    },
     listSelection: {
       listNamePlaceholder: 'リスト名',
       renameAria: '名前を変更',
@@ -56,7 +60,11 @@ export const messages = {
       cancel: 'Cancel',
       delete: 'Delete',
     },
-    lang: { switch: 'Language', ja: '日本語', en: 'English' },
+    lang: {
+      switch: 'Language',
+      labelJa: '日本語',
+      labelEn: 'English',
+    },
     listSelection: {
       listNamePlaceholder: 'List name',
       renameAria: 'Rename',

@@ -18,9 +18,9 @@ export default function LanguageSwitcher({ className = '' }) {
             : 'text-stone-500 hover:text-stone-700'
         }`}
         aria-pressed={locale === 'ja'}
-        aria-label={t('lang.ja')}
+        aria-label={t('lang.labelJa')}
       >
-        {t('lang.ja')}
+        日本語
       </button>
       <button
         type="button"
@@ -31,9 +31,9 @@ export default function LanguageSwitcher({ className = '' }) {
             : 'text-stone-500 hover:text-stone-700'
         }`}
         aria-pressed={locale === 'en'}
-        aria-label={t('lang.en')}
+        aria-label={t('lang.labelEn')}
       >
-        {t('lang.en')}
+        English
       </button>
     </div>
   )
