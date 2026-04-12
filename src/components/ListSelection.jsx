@@ -157,18 +157,18 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
       </div>
 
       <div className="mt-8 pt-6 border-t border-stone-100 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
-        <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+        <div className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-0">
           <button
             type="button"
             onClick={() => setShowResetConfirm(true)}
-            className="text-sm text-stone-400 hover:text-stone-600 text-left min-w-0 pr-2"
+            className="min-w-0 justify-self-start text-left text-sm text-stone-400 hover:text-stone-600"
           >
             {t('listSelection.deleteAllData')}
           </button>
           <button
             type="button"
             onClick={onOpenHelp}
-            className="text-sm text-stone-500 hover:text-stone-800 underline underline-offset-2 shrink-0"
+            className="shrink-0 justify-self-end text-sm text-stone-500 underline underline-offset-2 hover:text-stone-800 whitespace-nowrap"
             aria-label={t('help.openGuide')}
           >
             {t('help.openGuide')}
