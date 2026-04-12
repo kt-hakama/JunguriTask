@@ -4,6 +4,7 @@ import {
   PencilIcon,
   TrashIcon,
   ClockIcon,
+  ClockToggleBadge,
   ArrowUpIcon,
   ArrowDownIcon,
   ReorderArrowsBadge,
@@ -13,13 +14,22 @@ import {
   getReorderArrowsVisible,
   setReorderArrowsVisible,
 } from '../utils/reorderArrowsPreference'
+import {
+  getTaskTimesVisible,
+  setTaskTimesVisible,
+} from '../utils/taskTimeVisibilityPreference'
 
 export default function TaskScreen({ list, setData, onBack }) {
   if (!list) return null
 
   const [listNameEditing, setListNameEditing] = useState(false)
   const [listNameDraft, setListNameDraft] = useState('')
-  const [showReorderArrows, setShowReorderArrows] = useState(getReorderArrowsVisible)
+  const [showReorderArrows, setShowReorderArrows] = useState(() =>
+    getReorderArrowsVisible(list.id)
+  )
+  const [showTaskTimes, setShowTaskTimes] = useState(() =>
+    getTaskTimesVisible(list.id)
+  )
 
   useEffect(() => {
     setListNameEditing(false)
@@ -27,8 +37,17 @@ export default function TaskScreen({ list, setData, onBack }) {
   }, [list.id])
 
   useEffect(() => {
-    setReorderArrowsVisible(showReorderArrows)
-  }, [showReorderArrows])
+    setShowReorderArrows(getReorderArrowsVisible(list.id))
+    setShowTaskTimes(getTaskTimesVisible(list.id))
+  }, [list.id])
+
+  useEffect(() => {
+    setReorderArrowsVisible(list.id, showReorderArrows)
+  }, [list.id, showReorderArrows])
+
+  useEffect(() => {
+    setTaskTimesVisible(list.id, showTaskTimes)
+  }, [list.id, showTaskTimes])
 
   const tasks = list.tasks || []
   const firstTask = tasks[0]
@@ -182,6 +201,21 @@ export default function TaskScreen({ list, setData, onBack }) {
             >
               {list.name}
             </button>
+            {!isEmpty && isSingle && (
+              <button
+                type="button"
+                onClick={() => setShowTaskTimes((v) => !v)}
+                className="p-1.5 rounded-lg border border-stone-200 text-stone-500 hover:bg-stone-50 hover:text-stone-700 shrink-0 flex items-center justify-center"
+                aria-pressed={showTaskTimes}
+                aria-label={
+                  showTaskTimes
+                    ? '最終完了時刻を隠す'
+                    : '最終完了時刻を表示する'
+                }
+              >
+                <ClockToggleBadge active={showTaskTimes} />
+              </button>
+            )}
             <button
               type="button"
               onClick={startListNameEdit}
@@ -207,6 +241,7 @@ export default function TaskScreen({ list, setData, onBack }) {
                 onDelete={handleDeleteTask}
                 onRename={handleRenameTask}
                 showSkip={!isSingle}
+                showCompletionTime={showTaskTimes}
               />
             </div>
 
@@ -214,19 +249,34 @@ export default function TaskScreen({ list, setData, onBack }) {
               <div className="space-y-2 animate-task-enter">
                 <div className="flex items-center justify-between gap-2 mb-3">
                   <p className="text-sm text-stone-400 shrink-0 m-0">このあと</p>
-                  <button
-                    type="button"
-                    onClick={() => setShowReorderArrows((v) => !v)}
-                    className="p-1.5 rounded-lg border border-stone-200 text-stone-500 hover:bg-stone-50 hover:text-stone-700 shrink-0 flex items-center justify-center"
-                    aria-pressed={showReorderArrows}
-                    aria-label={
-                      showReorderArrows
-                        ? '並べ替え矢印を隠す'
-                        : '並べ替え矢印を表示する'
-                    }
-                  >
-                    <ReorderArrowsBadge active={showReorderArrows} />
-                  </button>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setShowTaskTimes((v) => !v)}
+                      className="p-1.5 rounded-lg border border-stone-200 text-stone-500 hover:bg-stone-50 hover:text-stone-700 flex items-center justify-center"
+                      aria-pressed={showTaskTimes}
+                      aria-label={
+                        showTaskTimes
+                          ? '最終完了時刻を隠す'
+                          : '最終完了時刻を表示する'
+                      }
+                    >
+                      <ClockToggleBadge active={showTaskTimes} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowReorderArrows((v) => !v)}
+                      className="p-1.5 rounded-lg border border-stone-200 text-stone-500 hover:bg-stone-50 hover:text-stone-700 flex items-center justify-center"
+                      aria-pressed={showReorderArrows}
+                      aria-label={
+                        showReorderArrows
+                          ? '並べ替え矢印を隠す'
+                          : '並べ替え矢印を表示する'
+                      }
+                    >
+                      <ReorderArrowsBadge active={showReorderArrows} />
+                    </button>
+                  </div>
                 </div>
                 {remainingTasks.map((task) => {
                   const idx = tasks.findIndex((t) => t.id === task.id)
@@ -237,6 +287,7 @@ export default function TaskScreen({ list, setData, onBack }) {
                       onDelete={handleDeleteTask}
                       onRename={handleRenameTask}
                       showReorderArrows={showReorderArrows}
+                      showCompletionTime={showTaskTimes}
                       canMoveUp={idx >= 2}
                       canMoveDown={idx >= 1 && idx < tasks.length - 1}
                       onMoveUp={() => handleMoveTaskInTail(task.id, 'up')}
@@ -302,7 +353,15 @@ function EmptyState({ onAddTask }) {
   )
 }
 
-function FirstTaskCard({ task, onComplete, onSkip, onDelete, onRename, showSkip }) {
+function FirstTaskCard({
+  task,
+  onComplete,
+  onSkip,
+  onDelete,
+  onRename,
+  showSkip,
+  showCompletionTime,
+}) {
   const [showActions, setShowActions] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editName, setEditName] = useState('')
@@ -374,7 +433,9 @@ function FirstTaskCard({ task, onComplete, onSkip, onDelete, onRename, showSkip 
             </button>
           </div>
 
-          <CompletionDateLine completedAt={task.lastCompletedAt} className="mt-3" />
+          {showCompletionTime && (
+            <CompletionDateLine completedAt={task.lastCompletedAt} className="mt-3" />
+          )}
 
           {showActions && (
             <div className="mt-4 pt-4 border-t border-stone-100 flex flex-col gap-1">
@@ -427,6 +488,7 @@ function TaskRow({
   onDelete,
   onRename,
   showReorderArrows,
+  showCompletionTime,
   canMoveUp,
   canMoveDown,
   onMoveUp,
@@ -535,7 +597,9 @@ function TaskRow({
                   </button>
                 </div>
               </div>
-              <CompletionDateLine completedAt={task.lastCompletedAt} />
+              {showCompletionTime && (
+                <CompletionDateLine completedAt={task.lastCompletedAt} />
+              )}
             </div>
           </div>
         </>

@@ -1,6 +1,5 @@
-/** リストごとに「このあと」の並べ替え矢印の表示。旧・全リスト共通キーから移行あり。 */
-const LEGACY_KEY = 'junguri-task-show-reorder-arrows'
-const MAP_KEY = 'junguri-task-show-reorder-arrows-by-list'
+/** リストごとに、タスクの最終完了時刻の表示／非表示。メインのタスクデータとは別キー。 */
+const MAP_KEY = 'junguri-task-show-task-times-by-list'
 
 function loadMap() {
   try {
@@ -23,21 +22,15 @@ function saveMap(map) {
   }
 }
 
-export function getReorderArrowsVisible(listId) {
+export function getTaskTimesVisible(listId) {
   const map = loadMap()
   if (listId != null && Object.prototype.hasOwnProperty.call(map, listId)) {
     return map[listId] === true
   }
-  try {
-    const v = localStorage.getItem(LEGACY_KEY)
-    if (v !== null) return v === 'true'
-  } catch {
-    /* ignore */
-  }
   return true
 }
 
-export function setReorderArrowsVisible(listId, visible) {
+export function setTaskTimesVisible(listId, visible) {
   if (listId == null) return
   const map = loadMap()
   map[listId] = visible

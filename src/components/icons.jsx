@@ -48,6 +48,20 @@ export function ClockIcon({ className = 'h-5 w-5' }) {
   )
 }
 
+/** 最終完了時刻の表示トグル用。 */
+export function ClockToggleBadge({ active, className = '' }) {
+  return (
+    <span
+      className={`inline-flex items-center justify-center leading-none ${
+        active ? 'text-stone-600' : 'text-stone-300'
+      } ${className}`}
+      aria-hidden
+    >
+      <ClockIcon className="h-3.5 w-3.5" />
+    </span>
+  )
+}
+
 export function ArrowUpIcon({ className = 'h-5 w-5' }) {
   return (
     <svg
