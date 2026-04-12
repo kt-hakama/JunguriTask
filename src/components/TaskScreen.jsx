@@ -1,18 +1,34 @@
 import { useState, useEffect } from 'react'
 import { generateId } from '../utils/id'
-import { PencilIcon, TrashIcon, ClockIcon, ArrowUpIcon, ArrowDownIcon } from './icons'
+import {
+  PencilIcon,
+  TrashIcon,
+  ClockIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
+  ReorderArrowsBadge,
+} from './icons'
 import { formatCompletionDate } from '../utils/formatCompletionDate'
+import {
+  getReorderArrowsVisible,
+  setReorderArrowsVisible,
+} from '../utils/reorderArrowsPreference'
 
 export default function TaskScreen({ list, setData, onBack }) {
   if (!list) return null
 
   const [listNameEditing, setListNameEditing] = useState(false)
   const [listNameDraft, setListNameDraft] = useState('')
+  const [showReorderArrows, setShowReorderArrows] = useState(getReorderArrowsVisible)
 
   useEffect(() => {
     setListNameEditing(false)
     setListNameDraft('')
   }, [list.id])
+
+  useEffect(() => {
+    setReorderArrowsVisible(showReorderArrows)
+  }, [showReorderArrows])
 
   const tasks = list.tasks || []
   const firstTask = tasks[0]
@@ -196,7 +212,22 @@ export default function TaskScreen({ list, setData, onBack }) {
 
             {remainingTasks.length > 0 && (
               <div className="space-y-2 animate-task-enter">
-                <p className="text-sm text-stone-400 mb-3">このあと</p>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <p className="text-sm text-stone-400 shrink-0 m-0">このあと</p>
+                  <button
+                    type="button"
+                    onClick={() => setShowReorderArrows((v) => !v)}
+                    className="p-1.5 rounded-lg border border-stone-200 text-stone-500 hover:bg-stone-50 hover:text-stone-700 shrink-0 flex items-center justify-center"
+                    aria-pressed={showReorderArrows}
+                    aria-label={
+                      showReorderArrows
+                        ? '並べ替え矢印を隠す'
+                        : '並べ替え矢印を表示する'
+                    }
+                  >
+                    <ReorderArrowsBadge active={showReorderArrows} />
+                  </button>
+                </div>
                 {remainingTasks.map((task) => {
                   const idx = tasks.findIndex((t) => t.id === task.id)
                   return (
@@ -205,6 +236,7 @@ export default function TaskScreen({ list, setData, onBack }) {
                       task={task}
                       onDelete={handleDeleteTask}
                       onRename={handleRenameTask}
+                      showReorderArrows={showReorderArrows}
                       canMoveUp={idx >= 2}
                       canMoveDown={idx >= 1 && idx < tasks.length - 1}
                       onMoveUp={() => handleMoveTaskInTail(task.id, 'up')}
@@ -394,6 +426,7 @@ function TaskRow({
   task,
   onDelete,
   onRename,
+  showReorderArrows,
   canMoveUp,
   canMoveDown,
   onMoveUp,
@@ -451,26 +484,28 @@ function TaskRow({
       ) : (
         <>
           <div className="flex items-stretch gap-2 min-w-0">
-            <div className="flex flex-col justify-center gap-1 shrink-0">
-              <button
-                type="button"
-                disabled={!canMoveUp}
-                onClick={onMoveUp}
-                className="min-h-9 min-w-9 flex items-center justify-center rounded-lg border border-stone-200 text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                aria-label="順番を上へ"
-              >
-                <ArrowUpIcon className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                disabled={!canMoveDown}
-                onClick={onMoveDown}
-                className="min-h-9 min-w-9 flex items-center justify-center rounded-lg border border-stone-200 text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                aria-label="順番を下へ"
-              >
-                <ArrowDownIcon className="h-5 w-5" />
-              </button>
-            </div>
+            {showReorderArrows && (
+              <div className="flex flex-col justify-center gap-1 shrink-0">
+                <button
+                  type="button"
+                  disabled={!canMoveUp}
+                  onClick={onMoveUp}
+                  className="min-h-9 min-w-9 flex items-center justify-center rounded-lg border border-stone-200 text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                  aria-label="順番を上へ"
+                >
+                  <ArrowUpIcon className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  disabled={!canMoveDown}
+                  onClick={onMoveDown}
+                  className="min-h-9 min-w-9 flex items-center justify-center rounded-lg border border-stone-200 text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                  aria-label="順番を下へ"
+                >
+                  <ArrowDownIcon className="h-5 w-5" />
+                </button>
+              </div>
+            )}
             <div className="flex-1 min-w-0 flex flex-col gap-2">
               <div className="flex items-center justify-between gap-2 min-w-0">
                 <button

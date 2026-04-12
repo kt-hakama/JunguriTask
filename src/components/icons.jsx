@@ -88,6 +88,21 @@ export function ArrowDownIcon({ className = 'h-5 w-5' }) {
   )
 }
 
+/** 並べ替え矢印の表示トグル用。上下矢印を縦に並べたアイコン。 */
+export function ReorderArrowsBadge({ active, className = '' }) {
+  return (
+    <span
+      className={`inline-flex flex-col items-center justify-center leading-none ${
+        active ? 'text-stone-600' : 'text-stone-300'
+      } ${className}`}
+      aria-hidden
+    >
+      <ArrowUpIcon className="h-3.5 w-3.5" />
+      <ArrowDownIcon className="h-3.5 w-3.5 -mt-0.5" />
+    </span>
+  )
+}
+
 export function TrashIcon({ className = 'h-5 w-5' }) {
   return (
     <svg
