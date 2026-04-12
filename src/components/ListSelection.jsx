@@ -62,7 +62,7 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
   }
 
   return (
-    <div className="flex flex-col min-h-dvh px-5 pt-6 pb-20">
+    <div className="flex flex-col min-h-dvh px-5 pt-6 pb-8">
       <div className="flex items-start justify-between gap-3 mb-8 mt-2">
         <h1 className="text-xl font-light text-stone-600 m-0 pr-2">
           {t('app.title')}
@@ -156,26 +156,25 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
         )}
       </div>
 
-      <div className="mt-8 pt-6 border-t border-stone-100">
-        <button
-          onClick={() => setShowResetConfirm(true)}
-          className="text-sm text-stone-400 hover:text-stone-600"
-        >
-          {t('listSelection.deleteAllData')}
-        </button>
+      <div className="mt-8 pt-6 border-t border-stone-100 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+        <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+          <button
+            type="button"
+            onClick={() => setShowResetConfirm(true)}
+            className="text-sm text-stone-400 hover:text-stone-600 text-left min-w-0 pr-2"
+          >
+            {t('listSelection.deleteAllData')}
+          </button>
+          <button
+            type="button"
+            onClick={onOpenHelp}
+            className="text-sm text-stone-500 hover:text-stone-800 underline underline-offset-2 shrink-0"
+            aria-label={t('help.openGuide')}
+          >
+            {t('help.openGuide')}
+          </button>
+        </div>
       </div>
-
-      <button
-        type="button"
-        onClick={onOpenHelp}
-        className="fixed z-20 text-sm text-stone-500 hover:text-stone-800 underline underline-offset-2 right-5 max-w-[calc(100%-2.5rem)] text-right"
-        style={{
-          bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))',
-        }}
-        aria-label={t('help.openGuide')}
-      >
-        {t('help.openGuide')}
-      </button>
 
       {showResetConfirm && (
         <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center z-50 p-4">
