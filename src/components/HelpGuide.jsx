@@ -301,6 +301,63 @@ function GuideJa() {
 
       <section>
         <h2 className="text-base font-semibold text-stone-800 mt-6 mb-2 border-b border-stone-200 pb-1">
+          プライバシー・データの取り扱い（注意）
+        </h2>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            やることやグループの内容は、
+            <strong>
+              サーバーに送ったり、インターネット上に自動バックアップしたりはしません
+            </strong>
+            （この端末のブラウザの中に保存されます）。
+          </li>
+          <li>
+            <strong>別のスマホ・別のパソコンとは勝手に同期しません。</strong>
+            機種変更やほかの端末では、同じ内容は出ません。
+          </li>
+          <li>
+            <strong>
+              ブラウザの閲覧データ削除・端末の初期化・サイトのデータ消去
+            </strong>
+            で、入力内容が消えることがあります。大切な内容は別の場所にも控えをとってください。
+          </li>
+          <li>
+            <strong>端末を他人に貸したり、盗難・紛失したり</strong>
+            すると、内容を見られたり失ったりする可能性があります。
+          </li>
+          <li>
+            <strong>
+              パスワード・口座番号・マイナンバーなど、本当に秘密にしたい情報は、タスクに書かないでください。
+            </strong>
+            このアプリはそうした用途向けの強い保護はしていません。
+          </li>
+          <li>
+            技術的には、
+            <strong>同じサイト（同じドメイン）の別のページ</strong>
+            と、ブラウザの保存領域の扱いが近い部分があります。普段の使い方で問題になることは少ないですが、心配な場合は信頼できる環境で使ってください。
+          </li>
+          <li>
+            <strong>公開のパソコンや、不特定多数が触れる端末</strong>
+            では使わないか、使う場合は終了後にブラウザのサイトデータ削除などを検討してください。
+          </li>
+          <li>
+            <strong>
+              本アプリの公開ページは HTTPS（鍵マーク）で提供しています。
+            </strong>
+            アドレスバーが <code className="bg-stone-100 px-1 rounded">https://</code>{' '}
+            になっていることを確認してから使ってください。
+          </li>
+          <li>
+            <strong>
+              ログインや個人情報の収集のための仕組みは、このアプリには入れていません。
+            </strong>
+            それでも、端末の中に残るデータは、端末やブラウザの扱いに依存します。
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 className="text-base font-semibold text-stone-800 mt-6 mb-2 border-b border-stone-200 pb-1">
           困ったとき
         </h2>
         <ul className="list-disc pl-5 space-y-2">
@@ -627,6 +684,56 @@ function GuideEn() {
             It does <strong>not</strong> copy itself to another phone or
             computer by itself. To share with family, use the same device or tell
             them in another way.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 className="text-base font-semibold text-stone-800 mt-6 mb-2 border-b border-stone-200 pb-1">
+          Privacy and data (please read)
+        </h2>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            Your tasks and group names are <strong>not uploaded to a server</strong>{' '}
+            and <strong>not auto-backed up online</strong>. They stay in this
+            device&apos;s browser storage.
+          </li>
+          <li>
+            They do <strong>not</strong> sync to other phones or PCs by
+            themselves.
+          </li>
+          <li>
+            Clearing browser data, resetting the device, or deleting site data
+            can <strong>erase your entries</strong>. Keep copies elsewhere if
+            something matters.
+          </li>
+          <li>
+            If someone else uses the device or it is{' '}
+            <strong>lost or stolen</strong>, your entries may be seen or lost.
+          </li>
+          <li>
+            Do <strong>not</strong> store passwords, bank details, or other highly
+            sensitive secrets in tasks—this app is not built for a vault-level
+            threat model.
+          </li>
+          <li>
+            On the web, storage rules can be shared across pages on the{' '}
+            <strong>same site (same domain)</strong>. That rarely causes issues in
+            normal use; use a device and browser you trust if you are concerned.
+          </li>
+          <li>
+            Avoid the app on <strong>shared or public computers</strong>, or clear
+            site data when you are done.
+          </li>
+          <li>
+            The public app is served over <strong>HTTPS</strong>. Check that the
+            address bar shows <code className="bg-stone-100 px-1 rounded">https://</code>{' '}
+            before you use it.
+          </li>
+          <li>
+            There is <strong>no login</strong> and <strong>no tracker</strong>{' '}
+            for collecting personal information in this app. What stays on the
+            device still depends on how you handle the device and browser.
           </li>
         </ul>
       </section>
