@@ -18,8 +18,11 @@ import {
   getTaskTimesVisible,
   setTaskTimesVisible,
 } from '../utils/taskTimeVisibilityPreference'
+import { useLocale } from '../i18n/LocaleContext'
+import LanguageSwitcher from './LanguageSwitcher'
 
 export default function TaskScreen({ list, setData, onBack }) {
+  const { t } = useLocale()
   if (!list) return null
 
   const [listNameEditing, setListNameEditing] = useState(false)
@@ -162,42 +165,45 @@ export default function TaskScreen({ list, setData, onBack }) {
         <button
           onClick={onBack}
           className="p-2 -ml-1 text-stone-500 hover:text-stone-700 shrink-0"
-          aria-label="戻る"
+          aria-label={t('taskScreen.back')}
         >
           ←
         </button>
         {listNameEditing ? (
-          <div className="flex flex-1 flex-wrap items-center gap-2 min-w-0">
-            <input
-              type="text"
-              value={listNameDraft}
-              onChange={(e) => setListNameDraft(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && saveListName()}
-              className="flex-1 min-w-[8rem] px-3 py-2 rounded-lg border border-stone-200 text-base text-stone-800"
-              autoFocus
-            />
-            <button
-              type="button"
-              onClick={saveListName}
-              className="px-3 py-2 rounded-lg bg-stone-800 text-white text-sm shrink-0"
-            >
-              保存
-            </button>
-            <button
-              type="button"
-              onClick={cancelListNameEdit}
-              className="px-3 py-2 rounded-lg bg-stone-100 text-stone-600 text-sm shrink-0"
-            >
-              キャンセル
-            </button>
-          </div>
+          <>
+            <div className="flex flex-1 flex-wrap items-center gap-2 min-w-0">
+              <input
+                type="text"
+                value={listNameDraft}
+                onChange={(e) => setListNameDraft(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && saveListName()}
+                className="flex-1 min-w-[8rem] px-3 py-2 rounded-lg border border-stone-200 text-base text-stone-800"
+                autoFocus
+              />
+              <button
+                type="button"
+                onClick={saveListName}
+                className="px-3 py-2 rounded-lg bg-stone-800 text-white text-sm shrink-0"
+              >
+                {t('common.save')}
+              </button>
+              <button
+                type="button"
+                onClick={cancelListNameEdit}
+                className="px-3 py-2 rounded-lg bg-stone-100 text-stone-600 text-sm shrink-0"
+              >
+                {t('common.cancel')}
+              </button>
+            </div>
+            <LanguageSwitcher className="shrink-0" />
+          </>
         ) : (
           <>
             <button
               type="button"
               onClick={startListNameEdit}
               className="text-base font-medium text-stone-700 truncate flex-1 min-w-0 text-left py-1 rounded-lg hover:bg-stone-50"
-              aria-label="リスト名を編集（タップ）"
+              aria-label={t('taskScreen.editListNameTap')}
             >
               {list.name}
             </button>
@@ -209,18 +215,19 @@ export default function TaskScreen({ list, setData, onBack }) {
                 aria-pressed={showTaskTimes}
                 aria-label={
                   showTaskTimes
-                    ? '最終完了時刻を隠す'
-                    : '最終完了時刻を表示する'
+                    ? t('taskScreen.lastCompletedHide')
+                    : t('taskScreen.lastCompletedShow')
                 }
               >
                 <ClockToggleBadge active={showTaskTimes} />
               </button>
             )}
+            <LanguageSwitcher className="shrink-0" />
             <button
               type="button"
               onClick={startListNameEdit}
               className="p-2 text-stone-400 hover:text-stone-700 shrink-0 rounded-lg flex items-center justify-center"
-              aria-label="リスト名を編集"
+              aria-label={t('taskScreen.editListName')}
             >
               <PencilIcon className="h-5 w-5" />
             </button>
@@ -230,7 +237,7 @@ export default function TaskScreen({ list, setData, onBack }) {
 
       <main className="flex-1 overflow-auto px-4 py-6">
         {isEmpty ? (
-          <EmptyState onAddTask={handleAddTask} />
+          <EmptyState onAddTask={handleAddTask} emptyPrompt={t('taskScreen.emptyPrompt')} taskNamePlaceholder={t('taskScreen.taskNamePlaceholder')} addTaskLabel={t('taskScreen.addTask')} />
         ) : (
           <>
             <div className="mb-6 animate-task-enter" key={firstTask.id}>
@@ -248,7 +255,9 @@ export default function TaskScreen({ list, setData, onBack }) {
             {remainingTasks.length > 0 && (
               <div className="space-y-2 animate-task-enter">
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <p className="text-sm text-stone-400 shrink-0 m-0">このあと</p>
+                  <p className="text-sm text-stone-400 shrink-0 m-0">
+                    {t('taskScreen.upNext')}
+                  </p>
                   <div className="flex items-center gap-1 shrink-0">
                     <button
                       type="button"
@@ -257,8 +266,8 @@ export default function TaskScreen({ list, setData, onBack }) {
                       aria-pressed={showTaskTimes}
                       aria-label={
                         showTaskTimes
-                          ? '最終完了時刻を隠す'
-                          : '最終完了時刻を表示する'
+                          ? t('taskScreen.lastCompletedHide')
+                          : t('taskScreen.lastCompletedShow')
                       }
                     >
                       <ClockToggleBadge active={showTaskTimes} />
@@ -270,8 +279,8 @@ export default function TaskScreen({ list, setData, onBack }) {
                       aria-pressed={showReorderArrows}
                       aria-label={
                         showReorderArrows
-                          ? '並べ替え矢印を隠す'
-                          : '並べ替え矢印を表示する'
+                          ? t('taskScreen.reorderHide')
+                          : t('taskScreen.reorderShow')
                       }
                     >
                       <ReorderArrowsBadge active={showReorderArrows} />
@@ -298,7 +307,11 @@ export default function TaskScreen({ list, setData, onBack }) {
               </div>
             )}
 
-            <AddTaskForm onAdd={handleAddTask} />
+            <AddTaskForm
+              onAdd={handleAddTask}
+              newTaskPlaceholder={t('taskScreen.newTaskPlaceholder')}
+              addTaskLabel={t('taskScreen.addTask')}
+            />
           </>
         )}
       </main>
@@ -307,17 +320,18 @@ export default function TaskScreen({ list, setData, onBack }) {
 }
 
 function CompletionDateLine({ completedAt, className = '' }) {
+  const { locale, t } = useLocale()
   if (completedAt == null) return null
   const ms = Number(completedAt)
   if (!Number.isFinite(ms)) return null
-  const text = formatCompletionDate(ms)
+  const text = formatCompletionDate(ms, locale)
   if (!text) return null
   const iso = new Date(ms).toISOString()
   return (
     <p
       className={`flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-sm text-stone-400 w-full min-w-0 ${className}`}
       role="status"
-      aria-label={`最終完了 ${text}`}
+      aria-label={`${t('task.lastCompletedPrefix')} ${text}`}
     >
       <ClockIcon className="h-4 w-4 shrink-0" />
       <time dateTime={iso} className="tabular-nums min-w-0">
@@ -327,27 +341,30 @@ function CompletionDateLine({ completedAt, className = '' }) {
   )
 }
 
-function EmptyState({ onAddTask }) {
+function EmptyState({
+  onAddTask,
+  emptyPrompt,
+  taskNamePlaceholder,
+  addTaskLabel,
+}) {
   const [name, setName] = useState('')
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[50vh] text-center px-4">
-      <p className="text-stone-500 mb-6 text-lg">
-        最初のタスクを追加しましょう
-      </p>
+      <p className="text-stone-500 mb-6 text-lg">{emptyPrompt}</p>
       <input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && onAddTask(name)}
-        placeholder="タスク名"
+        placeholder={taskNamePlaceholder}
         className="w-full max-w-sm px-4 py-3 rounded-xl border border-stone-200 mb-3"
       />
       <button
         onClick={() => onAddTask(name)}
         className="w-full max-w-sm py-3 rounded-xl bg-stone-800 text-white font-medium"
       >
-        タスク追加
+        {addTaskLabel}
       </button>
     </div>
   )
@@ -362,6 +379,7 @@ function FirstTaskCard({
   showSkip,
   showCompletionTime,
 }) {
+  const { t } = useLocale()
   const [showActions, setShowActions] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editName, setEditName] = useState('')
@@ -401,14 +419,14 @@ function FirstTaskCard({
               onClick={saveEdit}
               className="flex-1 py-3 rounded-xl bg-stone-800 text-white font-medium"
             >
-              保存
+              {t('common.save')}
             </button>
             <button
               type="button"
               onClick={cancelEdit}
               className="flex-1 py-3 rounded-xl bg-stone-100 text-stone-600"
             >
-              キャンセル
+              {t('common.cancel')}
             </button>
           </div>
         </div>
@@ -419,7 +437,7 @@ function FirstTaskCard({
               type="button"
               onClick={startEdit}
               className="text-xl font-medium text-stone-800 leading-relaxed flex-1 min-w-0 text-left rounded-xl py-1 -my-1 px-1 -mx-1 hover:bg-stone-50 active:bg-stone-100"
-              aria-label="タスク名を編集（タップ）"
+              aria-label={t('task.editNameTap')}
             >
               {task.name}
             </button>
@@ -427,7 +445,7 @@ function FirstTaskCard({
               type="button"
               onClick={() => setShowActions(!showActions)}
               className="p-1.5 text-stone-400 hover:text-stone-600 shrink-0"
-              aria-label="その他"
+              aria-label={t('task.more')}
             >
               ⋮
             </button>
@@ -443,7 +461,7 @@ function FirstTaskCard({
                 type="button"
                 onClick={startEdit}
                 className="p-2 text-stone-500 hover:text-stone-700 rounded-lg flex items-center gap-2"
-                aria-label="名前を編集"
+                aria-label={t('task.editName')}
               >
                 <PencilIcon className="h-5 w-5 shrink-0" />
               </button>
@@ -454,7 +472,7 @@ function FirstTaskCard({
                   setShowActions(false)
                 }}
                 className="p-2 text-red-500 hover:text-red-600 rounded-lg flex items-center gap-2"
-                aria-label="タスクを削除"
+                aria-label={t('task.deleteTask')}
               >
                 <TrashIcon className="h-5 w-5 shrink-0" />
               </button>
@@ -466,14 +484,14 @@ function FirstTaskCard({
               onClick={onComplete}
               className="flex-1 py-3.5 rounded-xl bg-stone-800 text-white font-medium text-base"
             >
-              完了
+              {t('task.done')}
             </button>
             {showSkip && (
               <button
                 onClick={onSkip}
                 className="px-5 py-3.5 rounded-xl border border-stone-200 text-stone-600 text-sm"
               >
-                スキップ
+                {t('task.skip')}
               </button>
             )}
           </div>
@@ -494,6 +512,7 @@ function TaskRow({
   onMoveUp,
   onMoveDown,
 }) {
+  const { t } = useLocale()
   const [showDelete, setShowDelete] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editName, setEditName] = useState('')
@@ -532,14 +551,14 @@ function TaskRow({
               onClick={cancelEdit}
               className="px-3 py-2 rounded-lg bg-stone-100 text-stone-600 text-sm"
             >
-              キャンセル
+              {t('common.cancel')}
             </button>
             <button
               type="button"
               onClick={saveEdit}
               className="px-3 py-2 rounded-lg bg-stone-800 text-white text-sm"
             >
-              保存
+              {t('common.save')}
             </button>
           </div>
         </div>
@@ -553,7 +572,7 @@ function TaskRow({
                   disabled={!canMoveUp}
                   onClick={onMoveUp}
                   className="min-h-9 min-w-9 flex items-center justify-center rounded-lg border border-stone-200 text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                  aria-label="順番を上へ"
+                  aria-label={t('task.moveUp')}
                 >
                   <ArrowUpIcon className="h-5 w-5" />
                 </button>
@@ -562,7 +581,7 @@ function TaskRow({
                   disabled={!canMoveDown}
                   onClick={onMoveDown}
                   className="min-h-9 min-w-9 flex items-center justify-center rounded-lg border border-stone-200 text-stone-600 hover:bg-stone-50 disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                  aria-label="順番を下へ"
+                  aria-label={t('task.moveDown')}
                 >
                   <ArrowDownIcon className="h-5 w-5" />
                 </button>
@@ -574,7 +593,7 @@ function TaskRow({
                   type="button"
                   onClick={startEdit}
                   className="text-stone-600 text-sm truncate flex-1 min-w-0 text-left rounded-lg py-1.5 pl-0 pr-2 hover:bg-stone-50 active:bg-stone-100"
-                  aria-label="タスク名を編集（タップ）"
+                  aria-label={t('task.editNameTap')}
                 >
                   {task.name}
                 </button>
@@ -583,7 +602,7 @@ function TaskRow({
                     type="button"
                     onClick={startEdit}
                     className="p-1.5 text-stone-400 hover:text-stone-700 rounded-lg flex items-center justify-center"
-                    aria-label="編集"
+                    aria-label={t('task.edit')}
                   >
                     <PencilIcon className="h-5 w-5" />
                   </button>
@@ -591,7 +610,7 @@ function TaskRow({
                     type="button"
                     onClick={() => setShowDelete(true)}
                     className="p-1.5 text-stone-400 hover:text-red-500 rounded-lg flex items-center justify-center"
-                    aria-label="削除"
+                    aria-label={t('task.delete')}
                   >
                     <TrashIcon className="h-5 w-5" />
                   </button>
@@ -607,13 +626,13 @@ function TaskRow({
       {showDelete && (
         <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl">
-            <p className="text-stone-700 mb-6">このタスクを削除しますか？</p>
+            <p className="text-stone-700 mb-6">{t('task.deleteConfirm')}</p>
             <div className="flex gap-3">
               <button
                 onClick={() => setShowDelete(false)}
                 className="flex-1 py-3 rounded-xl bg-stone-100 text-stone-600"
               >
-                キャンセル
+                {t('common.cancel')}
               </button>
               <button
                 onClick={() => {
@@ -622,7 +641,7 @@ function TaskRow({
                 }}
                 className="flex-1 py-3 rounded-xl bg-red-500 text-white"
               >
-                削除する
+                {t('common.delete')}
               </button>
             </div>
           </div>
@@ -632,7 +651,7 @@ function TaskRow({
   )
 }
 
-function AddTaskForm({ onAdd }) {
+function AddTaskForm({ onAdd, newTaskPlaceholder, addTaskLabel }) {
   const [name, setName] = useState('')
 
   const handleSubmit = () => {
@@ -649,14 +668,14 @@ function AddTaskForm({ onAdd }) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-          placeholder="新しいタスク"
+          placeholder={newTaskPlaceholder}
           className="flex-1 px-4 py-3 rounded-xl border border-stone-200 text-base"
         />
         <button
           onClick={handleSubmit}
           className="px-5 py-3 rounded-xl bg-stone-200 text-stone-700 font-medium shrink-0"
         >
-          タスク追加
+          {addTaskLabel}
         </button>
       </div>
     </div>

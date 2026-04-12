@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { generateId } from '../utils/id'
 import { resetAllData } from '../hooks/useLocalStorage'
+import { useLocale } from '../i18n/LocaleContext'
+import LanguageSwitcher from './LanguageSwitcher'
 import { PencilIcon, TrashIcon } from './icons'
 
 const MAX_LISTS = 3
 
 export default function ListSelection({ lists, setData, onOpenList }) {
+  const { t } = useLocale()
   const [editingId, setEditingId] = useState(null)
   const [editName, setEditName] = useState('')
   const [newListName, setNewListName] = useState('')
@@ -13,7 +16,7 @@ export default function ListSelection({ lists, setData, onOpenList }) {
 
   const handleCreateList = () => {
     if (lists.length >= MAX_LISTS) return
-    const name = newListName.trim() || '新しいリスト'
+    const name = newListName.trim() || t('listSelection.defaultListName')
     setData((prev) => ({
       ...prev,
       lists: [
@@ -60,9 +63,12 @@ export default function ListSelection({ lists, setData, onOpenList }) {
 
   return (
     <div className="flex flex-col min-h-dvh px-5 pt-6 pb-8">
-      <h1 className="text-xl font-light text-stone-600 mb-8 mt-2">
-        じゅんぐりタスク
-      </h1>
+      <div className="flex items-start justify-between gap-3 mb-8 mt-2">
+        <h1 className="text-xl font-light text-stone-600 m-0 pr-2">
+          {t('app.title')}
+        </h1>
+        <LanguageSwitcher className="shrink-0 mt-0.5" />
+      </div>
 
       <div className="flex-1 space-y-3">
         {lists.map((list) => (
@@ -78,7 +84,7 @@ export default function ListSelection({ lists, setData, onOpenList }) {
                   onChange={(e) => setEditName(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSaveRename()}
                   className="w-full px-4 py-2 rounded-xl border border-stone-200 text-base"
-                  placeholder="リスト名"
+                  placeholder={t('listSelection.listNamePlaceholder')}
                   autoFocus
                 />
                 <div className="flex gap-2">
@@ -86,7 +92,7 @@ export default function ListSelection({ lists, setData, onOpenList }) {
                     onClick={handleSaveRename}
                     className="flex-1 py-2 rounded-xl bg-stone-200 text-stone-700 text-sm"
                   >
-                    保存
+                    {t('common.save')}
                   </button>
                   <button
                     onClick={() => {
@@ -95,7 +101,7 @@ export default function ListSelection({ lists, setData, onOpenList }) {
                     }}
                     className="flex-1 py-2 rounded-xl bg-stone-100 text-stone-600 text-sm"
                   >
-                    キャンセル
+                    {t('common.cancel')}
                   </button>
                 </div>
               </div>
@@ -112,7 +118,7 @@ export default function ListSelection({ lists, setData, onOpenList }) {
                     type="button"
                     onClick={() => handleStartRename(list)}
                     className="p-2 text-stone-400 hover:text-stone-600 rounded-lg flex items-center justify-center"
-                    aria-label="名前を変更"
+                    aria-label={t('listSelection.renameAria')}
                   >
                     <PencilIcon className="h-5 w-5" />
                   </button>
@@ -120,7 +126,7 @@ export default function ListSelection({ lists, setData, onOpenList }) {
                     type="button"
                     onClick={() => handleDeleteList(list.id)}
                     className="p-2 text-stone-400 hover:text-red-500 rounded-lg flex items-center justify-center"
-                    aria-label="リストを削除"
+                    aria-label={t('listSelection.deleteListAria')}
                   >
                     <TrashIcon className="h-5 w-5" />
                   </button>
@@ -137,14 +143,14 @@ export default function ListSelection({ lists, setData, onOpenList }) {
               value={newListName}
               onChange={(e) => setNewListName(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleCreateList()}
-              placeholder="リスト名を入力"
+              placeholder={t('listSelection.newListPlaceholder')}
               className="w-full px-4 py-3 rounded-xl border border-stone-200 bg-white text-base mb-3"
             />
             <button
               onClick={handleCreateList}
               className="w-full py-2.5 rounded-xl bg-stone-300 text-stone-700 text-sm font-medium"
             >
-              リストを作成
+              {t('listSelection.createList')}
             </button>
           </div>
         )}
@@ -155,7 +161,7 @@ export default function ListSelection({ lists, setData, onOpenList }) {
           onClick={() => setShowResetConfirm(true)}
           className="text-sm text-stone-400 hover:text-stone-600"
         >
-          すべてのデータを削除
+          {t('listSelection.deleteAllData')}
         </button>
       </div>
 
@@ -163,20 +169,20 @@ export default function ListSelection({ lists, setData, onOpenList }) {
         <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl">
             <p className="text-stone-700 mb-6">
-              すべてのリストとタスクが削除されます。よろしいですか？
+              {t('listSelection.resetConfirm')}
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => setShowResetConfirm(false)}
                 className="flex-1 py-3 rounded-xl bg-stone-100 text-stone-600"
               >
-                キャンセル
+                {t('common.cancel')}
               </button>
               <button
                 onClick={handleReset}
                 className="flex-1 py-3 rounded-xl bg-red-500 text-white"
               >
-                削除する
+                {t('common.delete')}
               </button>
             </div>
           </div>

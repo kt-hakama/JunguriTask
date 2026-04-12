@@ -5,12 +5,30 @@ function pad2(n) {
   return s.length >= 2 ? s : `0${s}`
 }
 
-/** 端末ローカル。年なし・秒なし。例: 4/5（日） 14:30 */
-export function formatCompletionDate(timestampMs) {
+/**
+ * @param {number} timestampMs
+ * @param {'ja' | 'en'} [locale='ja']
+ */
+export function formatCompletionDate(timestampMs, locale = 'ja') {
   const ms = Number(timestampMs)
   if (!Number.isFinite(ms)) return ''
   const d = new Date(ms)
   if (Number.isNaN(d.getTime())) return ''
+
+  if (locale === 'en') {
+    try {
+      return new Intl.DateTimeFormat('en-US', {
+        weekday: 'short',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+      }).format(d)
+    } catch {
+      return ''
+    }
+  }
+
   const m = d.getMonth() + 1
   const day = d.getDate()
   const w = WEEKDAYS_JA[d.getDay()]
