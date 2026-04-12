@@ -3,6 +3,21 @@ import { useLocale } from '../i18n/LocaleContext'
 function GuideJa() {
   return (
     <div className="text-stone-700 text-sm leading-relaxed space-y-4 pb-8">
+      <section>
+        <h2 className="text-base font-semibold text-stone-800 mt-2 mb-2 border-b border-stone-200 pb-1">
+          名前の「じゅんぐり（順繰り）」とは
+        </h2>
+        <p>
+          <strong>「じゅんぐり（順繰り）」</strong>とは、
+          決められた順番で、ひとつずつ交代して（やることが順に入れ替わって）進めていくことを表す言葉です。
+        </p>
+        <ul className="list-disc pl-5 space-y-1 my-3">
+          <li>どれか一つだけが続けて行われるのではなく、</li>
+          <li>A → B → C → A → B → C… のように、</li>
+          <li>順番がぐるぐる回っていくイメージです。</li>
+        </ul>
+      </section>
+
       <p>
         この説明では、<strong>やることひとつひとつ</strong>のことを「
         <strong>やること</strong>」、名前を付けてまとめる箱のことを「
@@ -323,6 +338,19 @@ function GuideJa() {
 function GuideEn() {
   return (
     <div className="text-stone-700 text-sm leading-relaxed space-y-4 pb-8">
+      <section>
+        <h2 className="text-base font-semibold text-stone-800 mt-2 mb-2 border-b border-stone-200 pb-1">
+          What “Junguri” means
+        </h2>
+        <p>
+          <strong>Junguri</strong> (written <strong>順繰り</strong> in Japanese)
+          refers to moving forward in a <strong>fixed order</strong>, one step at
+          a time, with items <strong>taking turns</strong> (not one single task
+          repeating forever). Picture{' '}
+          <strong>A → B → C → A → B → C → …</strong>—the sequence keeps cycling.
+        </p>
+      </section>
+
       <p>
         In this guide, each item you do is called a <strong>“to-do”</strong>,
         and each named container is called a <strong>“group”</strong>. (The app
