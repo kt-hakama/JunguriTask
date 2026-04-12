@@ -380,14 +380,13 @@ function FirstTaskCard({
   showCompletionTime,
 }) {
   const { t } = useLocale()
-  const [showActions, setShowActions] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editName, setEditName] = useState('')
 
   const startEdit = () => {
     setEditName(task.name)
     setIsEditing(true)
-    setShowActions(false)
   }
 
   const saveEdit = () => {
@@ -432,7 +431,7 @@ function FirstTaskCard({
         </div>
       ) : (
         <>
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex items-start justify-between gap-2 min-w-0">
             <button
               type="button"
               onClick={startEdit}
@@ -441,42 +440,28 @@ function FirstTaskCard({
             >
               {task.name}
             </button>
-            <button
-              type="button"
-              onClick={() => setShowActions(!showActions)}
-              className="p-1.5 text-stone-400 hover:text-stone-600 shrink-0"
-              aria-label={t('task.more')}
-            >
-              ⋮
-            </button>
+            <div className="flex items-center shrink-0 gap-1 pt-0.5">
+              <button
+                type="button"
+                onClick={startEdit}
+                className="p-1.5 text-stone-400 hover:text-stone-700 rounded-lg flex items-center justify-center"
+                aria-label={t('task.edit')}
+              >
+                <PencilIcon className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowDelete(true)}
+                className="p-1.5 text-stone-400 hover:text-red-500 rounded-lg flex items-center justify-center"
+                aria-label={t('task.delete')}
+              >
+                <TrashIcon className="h-5 w-5" />
+              </button>
+            </div>
           </div>
 
           {showCompletionTime && (
             <CompletionDateLine completedAt={task.lastCompletedAt} className="mt-3" />
-          )}
-
-          {showActions && (
-            <div className="mt-4 pt-4 border-t border-stone-100 flex flex-col gap-1">
-              <button
-                type="button"
-                onClick={startEdit}
-                className="p-2 text-stone-500 hover:text-stone-700 rounded-lg flex items-center gap-2"
-                aria-label={t('task.editName')}
-              >
-                <PencilIcon className="h-5 w-5 shrink-0" />
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onDelete(task.id)
-                  setShowActions(false)
-                }}
-                className="p-2 text-red-500 hover:text-red-600 rounded-lg flex items-center gap-2"
-                aria-label={t('task.deleteTask')}
-              >
-                <TrashIcon className="h-5 w-5 shrink-0" />
-              </button>
-            </div>
           )}
 
           <div className="flex gap-3 mt-6">
@@ -495,6 +480,33 @@ function FirstTaskCard({
               </button>
             )}
           </div>
+
+          {showDelete && (
+            <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl">
+                <p className="text-stone-700 mb-6">{t('task.deleteConfirm')}</p>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowDelete(false)}
+                    className="flex-1 py-3 rounded-xl bg-stone-100 text-stone-600"
+                  >
+                    {t('common.cancel')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onDelete(task.id)
+                      setShowDelete(false)
+                    }}
+                    className="flex-1 py-3 rounded-xl bg-red-500 text-white"
+                  >
+                    {t('common.delete')}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>

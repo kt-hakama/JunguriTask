@@ -47,7 +47,6 @@ export const messages = {
     task: {
       lastCompletedPrefix: '最終完了',
       editNameTap: 'タスク名を編集（タップ）',
-      more: 'その他',
       editName: '名前を編集',
       deleteTask: 'タスクを削除',
       done: '完了',
@@ -104,7 +103,6 @@ export const messages = {
     task: {
       lastCompletedPrefix: 'Last completed',
       editNameTap: 'Edit task name (tap)',
-      more: 'More',
       editName: 'Edit name',
       deleteTask: 'Delete task',
       done: 'Done',

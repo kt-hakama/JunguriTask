@@ -41,8 +41,16 @@ function GuideJa() {
           <li>
             <strong>やること画面</strong>
             <br />
-            <strong>いちばん上</strong>が「いま取り組むやること」です。その下は
-            <strong>「このあと」</strong>に並んだ予定です。
+            <strong>いちばん上</strong>が「いま取り組むやること」です。やることが
+            <strong>2 つ以上</strong>あるとき、その下に
+            <strong>「このあと」</strong>に並んだ予定が続きます。
+          </li>
+          <li>
+            <strong>（任意）この説明をアプリ内で読む</strong>
+            <br />
+            グループ一覧の<strong>一番下</strong>にある <strong>「使い方」</strong>
+            を押すと、<strong>全画面</strong>でこの説明が開きます。
+            <strong>「閉じる」</strong>で一覧に戻ります。
           </li>
         </ol>
       </section>
@@ -67,13 +75,22 @@ function GuideJa() {
           <li>
             <strong>日本語と英語</strong>
             <br />
-            右上の <strong>「日本語」／「English」</strong>
+            タイトル「じゅんぐりタスク」の右上の{' '}
+            <strong>「日本語」／「English」</strong>
             で、画面の言葉を切り替えられます。選んだ方は、次に開いたときも覚えています。
+          </li>
+          <li>
+            <strong>使い方（全画面）</strong>
+            <br />
+            画面<strong>一番下</strong>の右側、下線付きの <strong>「使い方」</strong>
+            を押すと、説明画面が開きます。<strong>「閉じる」</strong>
+            でこの一覧に戻ります。
           </li>
           <li>
             <strong>すべて消す</strong>
             <br />
-            画面下の <strong>「すべてのデータを削除」</strong>
+            画面<strong>一番下</strong>の左側、{' '}
+            <strong>「すべてのデータを削除」</strong>
             から、グループもやることも
             <strong>まとめて消せます</strong>
             （あとから元に戻せません。本当にいいときだけ使ってください）。
@@ -85,6 +102,32 @@ function GuideJa() {
         <h2 className="text-base font-semibold text-stone-800 mt-6 mb-2 border-b border-stone-200 pb-1">
           やること画面でできること
         </h2>
+
+        <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
+          上端（ヘッダー）
+        </h3>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            <strong>←</strong> … グループの一覧に戻ります。
+          </li>
+          <li>
+            <strong>グループ（リスト）の名前</strong> …
+            タップすると名前を編集できます（入力欄・保存／キャンセル）。
+          </li>
+          <li>
+            <strong>えんぴつマーク</strong> …
+            リスト名の編集を始めます（タップと同じ目的の別の入り方です）。
+          </li>
+          <li>
+            <strong>「日本語」／「English」</strong> …
+            言語を切り替えます（一覧画面と同じく、次回も覚えています）。
+          </li>
+        </ul>
+        <p>
+          <strong>やることが 1 件だけ</strong>のときは、「このあと」という区切りは出ません。その代わり、
+          <strong>最終完了の日付・時刻</strong>を見せるかどうかは、ヘッダーにある{' '}
+          <strong>時計形のボタン</strong>で切り替えます。
+        </p>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
           マークでわかる操作（共通）
@@ -111,33 +154,22 @@ function GuideJa() {
                 </td>
               </tr>
               <tr>
-                <td className="p-2 border-b border-stone-100">
+                <td className="p-2">
                   <strong>ゴミ箱マーク</strong>
                 </td>
-                <td className="p-2 border-b border-stone-100">
+                <td className="p-2">
                   <strong>消します</strong>
                   。やることによっては「本当に消しますか？」と確認が出ます。
-                </td>
-              </tr>
-              <tr>
-                <td className="p-2">
-                  <strong>縦に並んだ三点「⋮」</strong>
-                </td>
-                <td className="p-2">
-                  <strong>そのほか</strong>
-                  のメニューを開きます（いちばん上の大きなカードだけ）。開くと、中は
-                  <strong>えんぴつとゴミ箱のマークだけ</strong>
-                  です（「編集」「削除」という文字は付きません）。
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
         <p>
-          <strong>「このあと」</strong>
-          の各行では、やることの名前の右に
+          <strong>いちばん上の大きなカード</strong>と
+          <strong>「このあと」</strong>の各行では、やることの名前の右に
           <strong>えんぴつとゴミ箱</strong>
-          がそのまま並びます（ここにも「編集」「削除」という文字はありません）。
+          がそのまま並びます（「編集」「削除」という文字だけは出ません）。
         </p>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
@@ -160,48 +192,60 @@ function GuideJa() {
             <strong>やることの名前</strong>を押す … 名前を変える画面に入ります。
           </li>
           <li>
-            <strong>⋮（縦三点）</strong> … <strong>そのほか</strong>
-            を開きます。中は <strong>えんぴつ</strong>（名前を変える）と{' '}
-            <strong>ゴミ箱</strong>（このやることを消す）のマークだけです。
+            名前の右の <strong>えんぴつ</strong> …
+            名前を変える操作を始めます（名前タップと同じ目的です）。
+          </li>
+          <li>
+            名前の右の <strong>ゴミ箱</strong> …
+            このやることを消します（確認が出ます）。
           </li>
         </ul>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
-          「このあと」のやること
+          「このあと」のやること（やることが 2 つ以上のとき）
         </h3>
+        <p>
+          見出し <strong>「このあと」</strong>の<strong>右側</strong>に、次の 2 つがあります。
+        </p>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            <strong>時計形のボタン</strong> … それぞれのやることに出る
+            <strong>最終完了の日付・時刻</strong>を、見せたり隠したりします。
+          </li>
+          <li>
+            <strong>矢印が二重になった形のボタン</strong> …{' '}
+            <strong>並べ替え</strong>用の「上へ／下へ」を、各行に出すかどうかを切り替えます。
+          </li>
+        </ul>
         <ul className="list-disc pl-5 space-y-2">
           <li>
             名前の右の <strong>えんぴつ</strong>と<strong>ゴミ箱</strong>
             を押すと、それぞれ名前の変更・消去です。
           </li>
           <li>
-            <strong>順番を入れ替える</strong> … 「このあと」の右側にある
-            <strong>矢印のスイッチ</strong>
-            をオンにすると、各行の<strong>上／下</strong>
-            のボタンで順番を入れ替えられます（「いまのやること」とは入れ替わりません）。
+            並べ替えをオンにすると、各行の<strong>左側</strong>に{' '}
+            <strong>順番を上へ／下へ</strong>
+            のボタンが並びます（<strong>いまのやること</strong>とは入れ替わりません）。
           </li>
           <li>
-            <strong>いつ完了したか（日付・時刻）</strong> … 時計のスイッチで、それぞれのやることに出る
-            <strong>完了の日付・時刻</strong>
-            を見せたり隠したりできます。矢印や時計のオン・オフは、
-            <strong>グループごと</strong>に覚えられます。
+            時計と並べ替えのオン・オフは、<strong>グループごと</strong>に覚えられます。
           </li>
         </ul>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
-          やることを足す
+          まだやることがないとき
         </h3>
         <p>
-          画面下に名前を入れて <strong>「タスク追加」</strong>
-          を押すと、そのグループの<strong>いちばん後ろ</strong>に足せます。
+          真ん中に案内が出ます。名前を入れて <strong>「タスク追加」</strong>{' '}
+          を押すと、最初のやることができます。
         </p>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
-          ひとつ前の画面に戻る
+          やることを足す（すでに 1 件以上あるとき）
         </h3>
         <p>
-          左上の <strong>←</strong>{' '}
-          を押すと、グループの一覧の画面に戻ります。
+          画面下の横並びの欄に名前を入れて <strong>「タスク追加」</strong>
+          を押すと、そのグループの<strong>いちばん後ろ</strong>に足せます。
         </p>
       </section>
 
@@ -245,13 +289,21 @@ function GuideJa() {
         </h2>
         <ul className="list-disc pl-5 space-y-2">
           <li>
+            この説明をアプリで読みたい → グループ一覧の一番下、{' '}
+            <strong>「使い方」</strong> を押してください。やること画面にいるときは、まず{' '}
+            <strong>←</strong> で一覧に戻ってから開けます。
+          </li>
+          <li>
             英語にしたい・日本語に戻したい → グループ一覧かやること画面の{' '}
             <strong>「日本語」／「English」</strong> を押してみてください。
           </li>
           <li>
-            順番を変えるボタンや、日付が見えない →{' '}
-            <strong>「このあと」</strong>
-            の行の右側にある、時計と矢印のスイッチが消えていないか見てください。
+            最終完了の日付や、順番を変えるボタンが見えない …
+            <strong>やることが 1 件だけ</strong>のときは
+            <strong>ヘッダー</strong>の時計形のボタンがオフになっていないか見てください（「このあと」はありません）。
+            <strong>2 件以上</strong>のときは <strong>「このあと」</strong> の見出しの
+            <strong>右</strong>にある、時計と矢印のボタンがオフになっていないか見てください。順番を変える「上／下」は、オンにすると各行の
+            <strong>左</strong>に出ます。
           </li>
         </ul>
       </section>
@@ -310,8 +362,16 @@ function GuideEn() {
           <li>
             <strong>To-do screen</strong>
             <br />
-            The <strong>top</strong> item is what you focus on now. Below that,
-            <strong> “Up next”</strong> shows what comes later.
+            The <strong>top</strong> item is what you focus on now. When there are{' '}
+            <strong>two or more</strong> to-dos, <strong>“Up next”</strong> lists
+            what comes after.
+          </li>
+          <li>
+            <strong>(Optional) Read this guide in the app</strong>
+            <br />
+            On the group list, tap <strong>“How to use”</strong> at the{' '}
+            <strong>bottom</strong> to open this help full screen. Tap{' '}
+            <strong>“Close”</strong> to return to the list.
           </li>
         </ol>
       </section>
@@ -336,15 +396,23 @@ function GuideEn() {
           <li>
             <strong>Japanese and English</strong>
             <br />
-            Use <strong>“日本語” / “English”</strong> at the top right. Your
-            choice is remembered the next time you open the app.
+            Next to the <strong>“Junguri Task”</strong> title, use{' '}
+            <strong>“日本語” / “English”</strong>. Your choice is remembered the
+            next time you open the app.
+          </li>
+          <li>
+            <strong>How to use (full screen)</strong>
+            <br />
+            At the <strong>bottom right</strong>, tap the underlined{' '}
+            <strong>“How to use”</strong> to open this guide. Tap{' '}
+            <strong>“Close”</strong> to return to the list.
           </li>
           <li>
             <strong>Delete everything</strong>
             <br />
-            At the bottom, <strong>“Delete all data”</strong> removes all groups
-            and to-dos at once (<strong>this cannot be undone</strong>—use only
-            when you are sure).
+            At the <strong>bottom left</strong>, <strong>“Delete all data”</strong>{' '}
+            removes all groups and to-dos at once (
+            <strong>this cannot be undone</strong>—use only when you are sure).
           </li>
         </ul>
       </section>
@@ -353,6 +421,32 @@ function GuideEn() {
         <h2 className="text-base font-semibold text-stone-800 mt-6 mb-2 border-b border-stone-200 pb-1">
           On the to-do screen
         </h2>
+
+        <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
+          Top bar (header)
+        </h3>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            <strong>←</strong> … Returns to the group list.
+          </li>
+          <li>
+            <strong>Group (list) name</strong> … Tap to edit the name (field,
+            Save / Cancel).
+          </li>
+          <li>
+            <strong>Pencil</strong> … Starts editing the list name (another way
+            to do the same as tapping the name).
+          </li>
+          <li>
+            <strong>“日本語” / “English”</strong> … Switches language (same as
+            on the first screen; remembered next time).
+          </li>
+        </ul>
+        <p>
+          When there is only <strong>one</strong> to-do, there is no “Up next”
+          section. Show or hide <strong>last completed</strong> date and time
+          with the <strong>clock-shaped button</strong> in the header.
+        </p>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
           What the symbols mean
@@ -381,29 +475,20 @@ function GuideEn() {
                 </td>
               </tr>
               <tr>
-                <td className="p-2 border-b border-stone-100">
+                <td className="p-2">
                   <strong>Trash</strong>
                 </td>
-                <td className="p-2 border-b border-stone-100">
+                <td className="p-2">
                   Delete. Sometimes the app asks “Are you sure?” first.
-                </td>
-              </tr>
-              <tr>
-                <td className="p-2">
-                  <strong>Three dots ⋮</strong>
-                </td>
-                <td className="p-2">
-                  Open <strong>More</strong> (only on the big top card). Inside
-                  you only see the <strong>pencil and trash</strong>—still no
-                  “Edit”/“Delete” text labels.
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
         <p>
-          In the <strong>“Up next”</strong> list, the pencil and trash sit to
-          the right of each name (again, no extra text labels).
+          On the <strong>large top card</strong> and in the{' '}
+          <strong>“Up next”</strong> list, the pencil and trash sit to the right
+          of each name (no “Edit”/“Delete” text labels).
         </p>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
@@ -424,43 +509,61 @@ function GuideEn() {
             Tap the <strong>to-do name</strong> … Opens name editing.
           </li>
           <li>
-            <strong>⋮</strong> … Opens <strong>More</strong>: only pencil
-            (rename) and trash (delete this to-do).
+            <strong>Pencil</strong> to the right of the name … Starts renaming
+            (same goal as tapping the name).
+          </li>
+          <li>
+            <strong>Trash</strong> to the right of the name … Deletes this
+            to-do (with a confirmation step).
           </li>
         </ul>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
-          “Up next” items
-        </h3>
-        <ul className="list-disc pl-5 space-y-2">
-          <li>
-            Pencil and trash on the right: rename or delete that row.
-          </li>
-          <li>
-            <strong>Reorder</strong> … Turn on the <strong>arrow switch</strong>{' '}
-            next to “Up next,” then use the <strong>up / down</strong> buttons
-            on each row (they do not swap with the current top to-do).
-          </li>
-          <li>
-            <strong>When you finished (date &amp; time)</strong> … The clock
-            switch shows or hides that information for each item. Arrow and clock
-            settings are saved <strong>per group</strong>.
-          </li>
-        </ul>
-
-        <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
-          Add a to-do
+          “Up next” items (when there are two or more to-dos)
         </h3>
         <p>
-          At the bottom, type a name and tap <strong>“Add task”</strong> to add
-          it at the <strong>end</strong> of the group.
+          To the <strong>right</strong> of the <strong>“Up next”</strong> heading
+          you will find:
+        </p>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            <strong>Clock-shaped button</strong> … Shows or hides{' '}
+            <strong>last completed</strong> date and time on each row.
+          </li>
+          <li>
+            <strong>Double-arrow button</strong> … Turns the per-row{' '}
+            <strong>up / down</strong> reorder controls on or off.
+          </li>
+        </ul>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            Pencil and trash on the right of the name: rename or delete that row.
+          </li>
+          <li>
+            When reorder is on, <strong>up / down</strong> buttons appear on the{' '}
+            <strong>left</strong> of each row (they do not swap with the current
+            top to-do).
+          </li>
+          <li>
+            Clock and reorder toggles are saved <strong>per group</strong>.
+          </li>
+        </ul>
+
+        <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
+          When there are no to-dos yet
+        </h3>
+        <p>
+          A message appears in the center. Type a name and tap{' '}
+          <strong>“Add task”</strong> to create your first to-do.
         </p>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
-          Go back
+          Add a to-do (when you already have at least one)
         </h3>
         <p>
-          Tap <strong>←</strong> at the top left to return to the group list.
+          Use the horizontal row at the bottom: type a name and tap{' '}
+          <strong>“Add task”</strong> to add it at the <strong>end</strong> of
+          the group.
         </p>
       </section>
 
@@ -505,12 +608,21 @@ function GuideEn() {
         </h2>
         <ul className="list-disc pl-5 space-y-2">
           <li>
+            To read this guide in the app: on the group list, tap{' '}
+            <strong>“How to use”</strong> at the bottom. If you are on the to-do
+            screen, tap <strong>←</strong> first to go back to the list.
+          </li>
+          <li>
             To switch language: try <strong>“日本語” / “English”</strong> on the
             group list or the to-do screen.
           </li>
           <li>
-            If reorder or dates are missing: check that the clock and arrow
-            switches on the <strong>“Up next”</strong> row are not turned off.
+            If last-completed times or reorder buttons are missing: with only{' '}
+            <strong>one</strong> to-do, check the <strong>clock</strong> in the
+            header (there is no “Up next”). With <strong>two or more</strong>,
+            check the clock and arrow buttons to the <strong>right</strong> of
+            the <strong>“Up next”</strong> heading. When reorder is on, up/down
+            controls appear on the <strong>left</strong> of each row.
           </li>
         </ul>
       </section>
