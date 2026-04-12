@@ -88,57 +88,17 @@ export function ArrowDownIcon({ className = 'h-5 w-5' }) {
   )
 }
 
-export function ArrowLeftIcon({ className = 'h-5 w-5' }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <path
-        d="M19 12H5M12 5l-7 7 7 7"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-export function ArrowRightIcon({ className = 'h-5 w-5' }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <path
-        d="M5 12h14M12 5l7 7-7 7"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-/** 並べ替え矢印の表示トグル用。左右矢印を横に並べたアイコン。 */
+/** 並べ替え矢印の表示トグル用。上向き・下向き矢印を横に並べたアイコン。 */
 export function ReorderArrowsBadge({ active, className = '' }) {
   return (
     <span
-      className={`inline-flex flex-row items-center justify-center gap-0 leading-none ${
+      className={`inline-flex flex-row items-center justify-center gap-0.5 leading-none ${
         active ? 'text-stone-600' : 'text-stone-300'
       } ${className}`}
       aria-hidden
     >
-      <ArrowLeftIcon className="h-3.5 w-3.5 -mr-0.5" />
-      <ArrowRightIcon className="h-3.5 w-3.5" />
+      <ArrowUpIcon className="h-3.5 w-3.5" />
+      <ArrowDownIcon className="h-3.5 w-3.5" />
     </span>
   )
 }
