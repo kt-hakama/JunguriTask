@@ -20,7 +20,7 @@ export default function LanguageSwitcher({ className = '' }) {
         aria-pressed={locale === 'ja'}
         aria-label={t('lang.ja')}
       >
-        JA
+        {t('lang.ja')}
       </button>
       <button
         type="button"
@@ -33,7 +33,7 @@ export default function LanguageSwitcher({ className = '' }) {
         aria-pressed={locale === 'en'}
         aria-label={t('lang.en')}
       >
-        EN
+        {t('lang.en')}
       </button>
     </div>
   )
