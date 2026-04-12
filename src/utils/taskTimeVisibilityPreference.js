@@ -1,4 +1,4 @@
-/** リストごとに、タスクの最終完了時刻の表示／非表示。メインのタスクデータとは別キー。 */
+/** グループ（list.id）ごとに、タスクの最終完了時刻の表示／非表示。メインのタスクデータとは別キー。 */
 const MAP_KEY = 'junguri-task-show-task-times-by-list'
 
 function loadMap() {

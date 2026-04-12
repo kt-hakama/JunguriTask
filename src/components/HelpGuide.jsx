@@ -6,7 +6,8 @@ function GuideJa() {
       <p>
         この説明では、<strong>やることひとつひとつ</strong>のことを「
         <strong>やること</strong>」、名前を付けてまとめる箱のことを「
-        <strong>グループ</strong>」とよびます（※画面のボタンなどには「タスク」「リスト」という言葉が出てくることがありますが、意味は同じです）。
+        <strong>グループ</strong>」とよびます（※1件ずつについては画面に「
+        <strong>タスク</strong>」と出ることがありますが、この説明での「やること」と同じ意味です）。
       </p>
 
       <section>
@@ -35,11 +36,11 @@ function GuideJa() {
           <li>
             <strong>グループを選ぶ</strong>
             <br />
-            付けた名前をタップすると、そのグループの<strong>やること画面</strong>
+            付けた名前をタップすると、そのグループの<strong>タスク画面</strong>
             に入ります。
           </li>
           <li>
-            <strong>やること画面</strong>
+            <strong>タスク画面</strong>
             <br />
             <strong>いちばん上</strong>が「いま取り組むやること」です。やることが
             <strong>2 つ以上</strong>あるとき、その下に
@@ -63,7 +64,7 @@ function GuideJa() {
           <li>
             <strong>新しいグループを増やす</strong>
             <br />
-            名前を入れて、画面に出てくる <strong>「リストを作成」</strong>
+            名前を入れて、画面に出てくる <strong>「グループを作成」</strong>
             を押します。何も書かずに作ると、名前は自動で付きます。
           </li>
           <li>
@@ -100,7 +101,7 @@ function GuideJa() {
 
       <section>
         <h2 className="text-base font-semibold text-stone-800 mt-6 mb-2 border-b border-stone-200 pb-1">
-          やること画面でできること
+          タスク画面でできること
         </h2>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
@@ -111,12 +112,12 @@ function GuideJa() {
             <strong>←</strong> … グループの一覧に戻ります。
           </li>
           <li>
-            <strong>グループ（リスト）の名前</strong> …
+            <strong>グループ名</strong> …
             タップすると名前を編集できます（入力欄・保存／キャンセル）。
           </li>
           <li>
             <strong>えんぴつマーク</strong> …
-            リスト名の編集を始めます（タップと同じ目的の別の入り方です）。
+            グループ名の編集を始めます（タップと同じ目的の別の入り方です）。
           </li>
           <li>
             <strong>「日本語」／「English」</strong> …
@@ -290,11 +291,11 @@ function GuideJa() {
         <ul className="list-disc pl-5 space-y-2">
           <li>
             この説明をアプリで読みたい → グループ一覧の一番下、{' '}
-            <strong>「使い方」</strong> を押してください。やること画面にいるときは、まず{' '}
+            <strong>「使い方」</strong> を押してください。タスク画面にいるときは、まず{' '}
             <strong>←</strong> で一覧に戻ってから開けます。
           </li>
           <li>
-            英語にしたい・日本語に戻したい → グループ一覧かやること画面の{' '}
+            英語にしたい・日本語に戻したい → グループ一覧かタスク画面の{' '}
             <strong>「日本語」／「English」</strong> を押してみてください。
           </li>
           <li>
@@ -324,8 +325,8 @@ function GuideEn() {
     <div className="text-stone-700 text-sm leading-relaxed space-y-4 pb-8">
       <p>
         In this guide, each item you do is called a <strong>“to-do”</strong>,
-        and each named group is called a <strong>“group”</strong>. (The app may
-        still say “task” or “list” on some buttons—the idea is the same.)
+        and each named container is called a <strong>“group”</strong>. (The app
+        labels each item as a <strong>“task”</strong>—same idea as a to-do here.)
       </p>
 
       <section>
@@ -357,10 +358,10 @@ function GuideEn() {
           <li>
             <strong>Opening a group</strong>
             <br />
-            Tap a name to open that group’s <strong>to-do screen</strong>.
+            Tap a name to open that group’s <strong>task screen</strong>.
           </li>
           <li>
-            <strong>To-do screen</strong>
+            <strong>Task screen</strong>
             <br />
             The <strong>top</strong> item is what you focus on now. When there are{' '}
             <strong>two or more</strong> to-dos, <strong>“Up next”</strong> lists
@@ -384,7 +385,7 @@ function GuideEn() {
           <li>
             <strong>Add a group</strong>
             <br />
-            Type a name and tap <strong>“Create list”</strong>. If you leave the
+            Type a name and tap <strong>“Create group”</strong>. If you leave the
             name blank, a name is filled in for you.
           </li>
           <li>
@@ -419,7 +420,7 @@ function GuideEn() {
 
       <section>
         <h2 className="text-base font-semibold text-stone-800 mt-6 mb-2 border-b border-stone-200 pb-1">
-          On the to-do screen
+          On the task screen
         </h2>
 
         <h3 className="text-sm font-semibold text-stone-800 mt-4 mb-2">
@@ -430,11 +431,11 @@ function GuideEn() {
             <strong>←</strong> … Returns to the group list.
           </li>
           <li>
-            <strong>Group (list) name</strong> … Tap to edit the name (field,
+            <strong>Group name</strong> … Tap to edit the name (field,
             Save / Cancel).
           </li>
           <li>
-            <strong>Pencil</strong> … Starts editing the list name (another way
+            <strong>Pencil</strong> … Starts editing the group name (another way
             to do the same as tapping the name).
           </li>
           <li>
@@ -609,12 +610,12 @@ function GuideEn() {
         <ul className="list-disc pl-5 space-y-2">
           <li>
             To read this guide in the app: on the group list, tap{' '}
-            <strong>“How to use”</strong> at the bottom. If you are on the to-do
+            <strong>“How to use”</strong> at the bottom. If you are on the task
             screen, tap <strong>←</strong> first to go back to the list.
           </li>
           <li>
             To switch language: try <strong>“日本語” / “English”</strong> on the
-            group list or the to-do screen.
+            group list or the task screen.
           </li>
           <li>
             If last-completed times or reorder buttons are missing: with only{' '}

@@ -1,4 +1,4 @@
-/** リストごとに「このあと」の並べ替え矢印の表示。旧・全リスト共通キーから移行あり。 */
+/** グループ（list.id）ごとに「このあと」の並べ替え矢印の表示。旧・全件共通キーから移行あり。 */
 const LEGACY_KEY = 'junguri-task-show-reorder-arrows'
 const MAP_KEY = 'junguri-task-show-reorder-arrows-by-list'
 
