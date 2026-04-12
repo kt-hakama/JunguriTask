@@ -14,6 +14,12 @@ export const messages = {
       labelJa: '日本語',
       labelEn: 'English',
     },
+    help: {
+      title: '使い方',
+      openGuide: '使い方',
+      close: '閉じる',
+      backAria: '使い方を閉じて一覧に戻る',
+    },
     listSelection: {
       listNamePlaceholder: 'リスト名',
       renameAria: '名前を変更',
@@ -64,6 +70,12 @@ export const messages = {
       switch: 'Language',
       labelJa: '日本語',
       labelEn: 'English',
+    },
+    help: {
+      title: 'How to use',
+      openGuide: 'How to use',
+      close: 'Close',
+      backAria: 'Close help and return to the list',
     },
     listSelection: {
       listNamePlaceholder: 'List name',

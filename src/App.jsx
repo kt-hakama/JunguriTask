@@ -3,10 +3,12 @@ import { useLocalStorage } from './hooks/useLocalStorage'
 import { LocaleProvider } from './i18n/LocaleContext'
 import ListSelection from './components/ListSelection'
 import TaskScreen from './components/TaskScreen'
+import HelpGuide from './components/HelpGuide'
 
 export default function App() {
   const [data, setData] = useLocalStorage()
   const [activeListId, setActiveListId] = useState(null)
+  const [showHelp, setShowHelp] = useState(false)
 
   const handleOpenList = (listId) => setActiveListId(listId)
   const handleBack = () => setActiveListId(null)
@@ -21,7 +23,9 @@ export default function App() {
   return (
     <LocaleProvider>
       <div className="min-h-dvh safe-area-pb">
-        {showTaskScreen ? (
+        {showHelp ? (
+          <HelpGuide onClose={() => setShowHelp(false)} />
+        ) : showTaskScreen ? (
           <TaskScreen
             list={activeList}
             setData={setData}
@@ -32,6 +36,7 @@ export default function App() {
             lists={data.lists}
             setData={setData}
             onOpenList={handleOpenList}
+            onOpenHelp={() => setShowHelp(true)}
           />
         )}
       </div>

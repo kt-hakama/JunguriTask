@@ -7,7 +7,7 @@ import { PencilIcon, TrashIcon } from './icons'
 
 const MAX_LISTS = 3
 
-export default function ListSelection({ lists, setData, onOpenList }) {
+export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }) {
   const { t } = useLocale()
   const [editingId, setEditingId] = useState(null)
   const [editName, setEditName] = useState('')
@@ -62,7 +62,7 @@ export default function ListSelection({ lists, setData, onOpenList }) {
   }
 
   return (
-    <div className="flex flex-col min-h-dvh px-5 pt-6 pb-8">
+    <div className="flex flex-col min-h-dvh px-5 pt-6 pb-20">
       <div className="flex items-start justify-between gap-3 mb-8 mt-2">
         <h1 className="text-xl font-light text-stone-600 m-0 pr-2">
           {t('app.title')}
@@ -164,6 +164,18 @@ export default function ListSelection({ lists, setData, onOpenList }) {
           {t('listSelection.deleteAllData')}
         </button>
       </div>
+
+      <button
+        type="button"
+        onClick={onOpenHelp}
+        className="fixed z-20 text-sm text-stone-500 hover:text-stone-800 underline underline-offset-2 right-5 max-w-[calc(100%-2.5rem)] text-right"
+        style={{
+          bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))',
+        }}
+        aria-label={t('help.openGuide')}
+      >
+        {t('help.openGuide')}
+      </button>
 
       {showResetConfirm && (
         <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center z-50 p-4">
