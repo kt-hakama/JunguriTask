@@ -160,7 +160,7 @@ export default function TaskScreen({ list, setData, onBack }) {
   }
 
   return (
-    <div className="flex flex-col min-h-dvh">
+    <div className="flex flex-1 flex-col min-h-0">
       <header className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 bg-white/80 backdrop-blur">
         <button
           onClick={onBack}
@@ -235,7 +235,7 @@ export default function TaskScreen({ list, setData, onBack }) {
         )}
       </header>
 
-      <main className="flex-1 overflow-auto px-4 py-6">
+      <main className="min-h-0 flex-1 overflow-auto px-4 py-6">
         {isEmpty ? (
           <EmptyState onAddTask={handleAddTask} emptyPrompt={t('taskScreen.emptyPrompt')} taskNamePlaceholder={t('taskScreen.taskNamePlaceholder')} addTaskLabel={t('taskScreen.addTask')} />
         ) : (
@@ -435,7 +435,7 @@ function FirstTaskCard({
             <button
               type="button"
               onClick={startEdit}
-              className="text-xl font-medium text-stone-800 leading-relaxed flex-1 min-w-0 text-left rounded-xl py-1 -my-1 px-1 -mx-1 hover:bg-stone-50 active:bg-stone-100"
+              className="text-xl font-medium text-stone-800 leading-relaxed flex-1 min-w-0 text-left rounded-xl py-1 -my-1 px-1 -mx-1 transition-opacity duration-150 hover:opacity-75 active:opacity-90"
               aria-label={t('task.editNameTap')}
             >
               {task.name}
@@ -604,7 +604,7 @@ function TaskRow({
                 <button
                   type="button"
                   onClick={startEdit}
-                  className="text-stone-600 text-sm truncate flex-1 min-w-0 text-left rounded-lg py-1.5 pl-0 pr-2 hover:bg-stone-50 active:bg-stone-100"
+                  className="text-stone-600 text-sm truncate flex-1 min-w-0 text-left rounded-lg py-1.5 pl-0 pr-2 transition-opacity duration-150 hover:opacity-75 active:opacity-90"
                   aria-label={t('task.editNameTap')}
                 >
                   {task.name}

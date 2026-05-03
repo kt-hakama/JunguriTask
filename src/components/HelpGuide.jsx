@@ -778,7 +778,7 @@ export default function HelpGuide({ onClose }) {
   const { locale, t } = useLocale()
 
   return (
-    <div className="flex flex-col min-h-dvh bg-stone-50 safe-area-pb">
+    <div className="flex flex-1 flex-col min-h-0">
       <header className="flex items-center gap-2 px-4 py-3 border-b border-stone-200 bg-white/90 backdrop-blur shrink-0">
         <button
           type="button"
@@ -792,7 +792,7 @@ export default function HelpGuide({ onClose }) {
           {t('help.title')}
         </h1>
       </header>
-      <main className="flex-1 overflow-auto px-4 pt-4">
+      <main className="min-h-0 flex-1 overflow-auto px-4 pt-4">
         {locale === 'ja' ? <GuideJa /> : <GuideEn />}
       </main>
     </div>

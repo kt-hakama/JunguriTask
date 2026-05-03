@@ -62,7 +62,7 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
   }
 
   return (
-    <div className="flex flex-col min-h-dvh px-5 pt-6 pb-8">
+    <div className="flex flex-1 flex-col min-h-0 px-5 pt-6 pb-8">
       <div className="flex items-start justify-between gap-3 mb-8 mt-2">
         <h1 className="text-xl font-light text-stone-600 m-0 pr-2">
           {t('app.title')}
@@ -109,7 +109,7 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
               <div className="flex items-center">
                 <button
                   onClick={() => onOpenList(list.id)}
-                  className="flex-1 px-5 py-4 text-left text-base text-stone-800"
+                  className="flex-1 px-5 py-4 text-left text-base text-stone-800 transition-opacity duration-150 hover:opacity-75"
                 >
                   {list.name}
                 </button>
