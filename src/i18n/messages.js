@@ -47,6 +47,10 @@ export const messages = {
       completedTasksTitle: '完了済タスク',
       completionLogEmpty: 'まだ完了した記録がありません',
       backToTaskScreenAria: 'タスク画面に戻る',
+      clearAllCompletionHistory: '完了済タスクの記録をすべて削除',
+      clearAllCompletionHistoryConfirm:
+        'このグループの完了の記録をすべて削除しますか？',
+      clearAllCompletionHistoryNote: 'いまのタスク一覧は消えません。',
     },
     task: {
       lastCompletedPrefix: '最終完了',
@@ -107,6 +111,10 @@ export const messages = {
       completedTasksTitle: 'Completed',
       completionLogEmpty: 'No completed tasks yet',
       backToTaskScreenAria: 'Back to task screen',
+      clearAllCompletionHistory: 'Clear all completed-task records',
+      clearAllCompletionHistoryConfirm:
+        'Remove all completion records for this group?',
+      clearAllCompletionHistoryNote: 'Your current task list will not change.',
     },
     task: {
       lastCompletedPrefix: 'Last completed',

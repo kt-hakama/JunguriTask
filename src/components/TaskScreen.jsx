@@ -39,6 +39,8 @@ export default function TaskScreen({ list, setData, onBack }) {
     getTaskTimesVisible(list.id)
   )
   const [showCompletionHistory, setShowCompletionHistory] = useState(false)
+  const [showClearCompletionConfirm, setShowClearCompletionConfirm] =
+    useState(false)
 
   useEffect(() => {
     setListNameEditing(false)
@@ -48,6 +50,14 @@ export default function TaskScreen({ list, setData, onBack }) {
   useEffect(() => {
     setShowCompletionHistory(false)
   }, [list.id])
+
+  useEffect(() => {
+    setShowClearCompletionConfirm(false)
+  }, [list.id])
+
+  useEffect(() => {
+    if (!showCompletionHistory) setShowClearCompletionConfirm(false)
+  }, [showCompletionHistory])
 
   useEffect(() => {
     setShowReorderArrows(getReorderArrowsVisible(list.id))
@@ -173,6 +183,13 @@ export default function TaskScreen({ list, setData, onBack }) {
     setListNameDraft('')
   }
 
+  const completionLogEntries = normalizeCompletionLog(list)
+
+  const handleClearCompletionLog = () => {
+    updateList((l) => ({ ...l, completionLog: [] }))
+    setShowClearCompletionConfirm(false)
+  }
+
   return (
     <div className="flex flex-1 flex-col min-h-0">
       <header className="shrink-0 border-b border-stone-100 bg-white/80 backdrop-blur">
@@ -291,7 +308,50 @@ export default function TaskScreen({ list, setData, onBack }) {
 
       <main className="min-h-0 flex-1 overflow-auto px-4 py-6">
         {showCompletionHistory ? (
-          <CompletedTasksScreen entries={normalizeCompletionLog(list)} />
+          <>
+            <div className="flex flex-col gap-4">
+              {completionLogEntries.length > 0 && (
+                <div className="flex w-full justify-center px-1">
+                  <button
+                    type="button"
+                    onClick={() => setShowClearCompletionConfirm(true)}
+                    className="max-w-[min(100%,22rem)] rounded-lg border border-stone-200 bg-stone-50/80 px-3 py-2 text-center text-xs font-medium leading-snug text-stone-600 transition-colors hover:bg-white hover:text-stone-800"
+                  >
+                    {t('taskScreen.clearAllCompletionHistory')}
+                  </button>
+                </div>
+              )}
+              <CompletedTasksScreen entries={completionLogEntries} />
+            </div>
+            {showClearCompletionConfirm && (
+              <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 sm:items-center">
+                <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
+                  <p className="mb-2 text-stone-700">
+                    {t('taskScreen.clearAllCompletionHistoryConfirm')}
+                  </p>
+                  <p className="mb-6 text-sm text-stone-500">
+                    {t('taskScreen.clearAllCompletionHistoryNote')}
+                  </p>
+                  <div className="flex gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setShowClearCompletionConfirm(false)}
+                      className="flex-1 rounded-xl bg-stone-100 py-3 text-stone-600"
+                    >
+                      {t('common.cancel')}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleClearCompletionLog}
+                      className="flex-1 rounded-xl bg-red-500 py-3 text-white"
+                    >
+                      {t('common.delete')}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
         ) : isEmpty ? (
           <EmptyState onAddTask={handleAddTask} emptyPrompt={t('taskScreen.emptyPrompt')} taskNamePlaceholder={t('taskScreen.taskNamePlaceholder')} addTaskLabel={t('taskScreen.addTask')} />
         ) : (
