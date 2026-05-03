@@ -25,6 +25,7 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
           id: generateId(),
           name,
           tasks: [],
+          completionLog: [],
         },
       ],
     }))

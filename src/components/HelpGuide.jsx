@@ -582,14 +582,14 @@ function GuideEn() {
         </h3>
         <ul className="list-disc pl-5 space-y-2">
           <li>
-            <strong>Done</strong> … Marks progress for now and sends the item
+            <strong>Complete</strong> … Marks progress for now and sends the item
             to the <strong>back of the line</strong> (it will come around again
             later).
           </li>
           <li>
             <strong>Skip</strong> … Only when there are{' '}
             <strong>two or more</strong> to-dos. Sends the current one backward
-            without a “done” record so another item can be on top.
+            without a completion record so another item can be on top.
           </li>
           <li>
             Tap the <strong>to-do name</strong> … Opens name editing.
@@ -659,7 +659,7 @@ function GuideEn() {
         </h2>
         <ul className="list-disc pl-5 space-y-2">
           <li>
-            <strong>“Done”</strong> … For when you want to say “that’s enough
+            <strong>“Complete”</strong> … For when you want to say “that’s enough
             for now.” The item goes to the <strong>back of the line</strong> and
             comes back in turn later.
           </li>
@@ -766,7 +766,7 @@ function GuideEn() {
       <p className="mt-6 pt-4 border-t border-stone-200 text-stone-600">
         <strong>New to the app?</strong> Try making{' '}
         <strong>
-          one group, two or three to-dos, then tap “Done” and “Skip” once each
+          one group, two or three to-dos, then tap “Complete” and “Skip” once each
         </strong>
         —that usually makes the flow easy to feel.
       </p>

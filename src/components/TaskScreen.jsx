@@ -20,6 +20,11 @@ import {
 } from '../utils/taskTimeVisibilityPreference'
 import { useLocale } from '../i18n/LocaleContext'
 import LanguageSwitcher from './LanguageSwitcher'
+import CompletedTasksScreen from './CompletedTasksScreen'
+import {
+  appendCompletionEntry,
+  normalizeCompletionLog,
+} from '../utils/completionLog'
 
 export default function TaskScreen({ list, setData, onBack }) {
   const { t } = useLocale()
@@ -33,10 +38,15 @@ export default function TaskScreen({ list, setData, onBack }) {
   const [showTaskTimes, setShowTaskTimes] = useState(() =>
     getTaskTimesVisible(list.id)
   )
+  const [showCompletionHistory, setShowCompletionHistory] = useState(false)
 
   useEffect(() => {
     setListNameEditing(false)
     setListNameDraft('')
+  }, [list.id])
+
+  useEffect(() => {
+    setShowCompletionHistory(false)
   }, [list.id])
 
   useEffect(() => {
@@ -69,12 +79,15 @@ export default function TaskScreen({ list, setData, onBack }) {
 
   const handleComplete = () => {
     if (isEmpty) return
+    const now = Date.now()
+    const taskNameSnapshot = firstTask.name
     if (isSingle) {
       updateList((l) => ({
         ...l,
+        completionLog: appendCompletionEntry(l, taskNameSnapshot, now),
         tasks: l.tasks.map((t) =>
           t.id === firstTask.id
-            ? { ...t, lastCompletedAt: Date.now() }
+            ? { ...t, lastCompletedAt: now }
             : t
         ),
       }))
@@ -82,7 +95,8 @@ export default function TaskScreen({ list, setData, onBack }) {
       const [head, ...tail] = tasks
       updateList((l) => ({
         ...l,
-        tasks: [...tail, { ...head, lastCompletedAt: Date.now() }],
+        completionLog: appendCompletionEntry(l, taskNameSnapshot, now),
+        tasks: [...tail, { ...head, lastCompletedAt: now }],
       }))
     }
   }
@@ -161,15 +175,31 @@ export default function TaskScreen({ list, setData, onBack }) {
 
   return (
     <div className="flex flex-1 flex-col min-h-0">
-      <header className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 bg-white/80 backdrop-blur">
+      <header className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 bg-white/80 backdrop-blur shrink-0">
         <button
-          onClick={onBack}
+          type="button"
+          onClick={
+            showCompletionHistory
+              ? () => setShowCompletionHistory(false)
+              : onBack
+          }
           className="p-2 -ml-1 text-stone-500 hover:text-stone-700 shrink-0"
-          aria-label={t('taskScreen.back')}
+          aria-label={
+            showCompletionHistory
+              ? t('taskScreen.backToTaskScreenAria')
+              : t('taskScreen.back')
+          }
         >
           ←
         </button>
-        {listNameEditing ? (
+        {showCompletionHistory ? (
+          <>
+            <h1 className="text-base font-medium text-stone-800 flex-1 min-w-0 m-0 truncate">
+              {t('taskScreen.completedTasksTitle')}
+            </h1>
+            <LanguageSwitcher className="shrink-0" />
+          </>
+        ) : listNameEditing ? (
           <>
             <div className="flex flex-1 flex-wrap items-center gap-2 min-w-0">
               <input
@@ -222,6 +252,18 @@ export default function TaskScreen({ list, setData, onBack }) {
                 <ClockToggleBadge active={showTaskTimes} />
               </button>
             )}
+            <div className="inline-flex shrink-0 items-center rounded-lg border border-stone-200 bg-stone-50/80 p-0.5">
+              <button
+                type="button"
+                onClick={() => {
+                  cancelListNameEdit()
+                  setShowCompletionHistory(true)
+                }}
+                className="rounded-md px-2 py-1 text-xs font-medium text-stone-600 transition-colors hover:bg-white hover:text-stone-800"
+              >
+                {t('taskScreen.completedTasks')}
+              </button>
+            </div>
             <LanguageSwitcher className="shrink-0" />
             <button
               type="button"
@@ -236,7 +278,9 @@ export default function TaskScreen({ list, setData, onBack }) {
       </header>
 
       <main className="min-h-0 flex-1 overflow-auto px-4 py-6">
-        {isEmpty ? (
+        {showCompletionHistory ? (
+          <CompletedTasksScreen entries={normalizeCompletionLog(list)} />
+        ) : isEmpty ? (
           <EmptyState onAddTask={handleAddTask} emptyPrompt={t('taskScreen.emptyPrompt')} taskNamePlaceholder={t('taskScreen.taskNamePlaceholder')} addTaskLabel={t('taskScreen.addTask')} />
         ) : (
           <>
