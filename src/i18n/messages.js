@@ -45,6 +45,7 @@ export const messages = {
       newTaskPlaceholder: '新しいタスク',
       completedTasks: '完了済タスク',
       completedTasksTitle: '完了済タスク',
+      completionListDescription: '完了したタスクを新しい順に最大20件表示します',
       completionLogEmpty: 'まだ完了した記録がありません',
       backToTaskScreenAria: 'タスク画面に戻る',
       clearAllCompletionHistory: '完了済タスクの記録をすべて削除',
@@ -109,6 +110,8 @@ export const messages = {
       newTaskPlaceholder: 'New task',
       completedTasks: 'Completed',
       completedTasksTitle: 'Completed',
+      completionListDescription:
+        'Showing up to 20 completed tasks, newest first.',
       completionLogEmpty: 'No completed tasks yet',
       backToTaskScreenAria: 'Back to task screen',
       clearAllCompletionHistory: 'Clear all completed-task records',

@@ -194,19 +194,24 @@ export default function TaskScreen({ list, setData, onBack }) {
     <div className="flex flex-1 flex-col min-h-0">
       <header className="shrink-0 border-b border-stone-100 bg-white/80 backdrop-blur">
         {showCompletionHistory ? (
-          <div className="flex items-center gap-2 px-4 py-3">
-            <button
-              type="button"
-              onClick={() => setShowCompletionHistory(false)}
-              className="p-2 -ml-1 text-stone-500 hover:text-stone-700 shrink-0"
-              aria-label={t('taskScreen.backToTaskScreenAria')}
-            >
-              ←
-            </button>
-            <h1 className="text-base font-medium text-stone-800 flex-1 min-w-0 m-0 truncate">
-              {t('taskScreen.completedTasksTitle')}
-            </h1>
-            <LanguageSwitcher className="shrink-0" />
+          <div className="px-4 pt-3 pb-3">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowCompletionHistory(false)}
+                className="p-2 -ml-1 text-stone-500 hover:text-stone-700 shrink-0"
+                aria-label={t('taskScreen.backToTaskScreenAria')}
+              >
+                ←
+              </button>
+              <h1 className="text-base font-medium text-stone-800 flex-1 min-w-0 m-0 truncate">
+                {t('taskScreen.completedTasksTitle')}
+              </h1>
+              <LanguageSwitcher className="shrink-0" />
+            </div>
+            <p className="m-0 mt-2 text-sm text-stone-500 leading-snug">
+              {t('taskScreen.completionListDescription')}
+            </p>
           </div>
         ) : listNameEditing ? (
           <div className="flex items-center gap-2 px-4 py-3">
