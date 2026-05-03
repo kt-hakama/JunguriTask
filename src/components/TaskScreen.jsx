@@ -175,32 +175,32 @@ export default function TaskScreen({ list, setData, onBack }) {
 
   return (
     <div className="flex flex-1 flex-col min-h-0">
-      <header className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 bg-white/80 backdrop-blur shrink-0">
-        <button
-          type="button"
-          onClick={
-            showCompletionHistory
-              ? () => setShowCompletionHistory(false)
-              : onBack
-          }
-          className="p-2 -ml-1 text-stone-500 hover:text-stone-700 shrink-0"
-          aria-label={
-            showCompletionHistory
-              ? t('taskScreen.backToTaskScreenAria')
-              : t('taskScreen.back')
-          }
-        >
-          ←
-        </button>
+      <header className="shrink-0 border-b border-stone-100 bg-white/80 backdrop-blur">
         {showCompletionHistory ? (
-          <>
+          <div className="flex items-center gap-2 px-4 py-3">
+            <button
+              type="button"
+              onClick={() => setShowCompletionHistory(false)}
+              className="p-2 -ml-1 text-stone-500 hover:text-stone-700 shrink-0"
+              aria-label={t('taskScreen.backToTaskScreenAria')}
+            >
+              ←
+            </button>
             <h1 className="text-base font-medium text-stone-800 flex-1 min-w-0 m-0 truncate">
               {t('taskScreen.completedTasksTitle')}
             </h1>
             <LanguageSwitcher className="shrink-0" />
-          </>
+          </div>
         ) : listNameEditing ? (
-          <>
+          <div className="flex items-center gap-2 px-4 py-3">
+            <button
+              type="button"
+              onClick={onBack}
+              className="p-2 -ml-1 text-stone-500 hover:text-stone-700 shrink-0"
+              aria-label={t('taskScreen.back')}
+            >
+              ←
+            </button>
             <div className="flex flex-1 flex-wrap items-center gap-2 min-w-0">
               <input
                 type="text"
@@ -226,53 +226,65 @@ export default function TaskScreen({ list, setData, onBack }) {
               </button>
             </div>
             <LanguageSwitcher className="shrink-0" />
-          </>
+          </div>
         ) : (
           <>
-            <button
-              type="button"
-              onClick={startListNameEdit}
-              className="text-base font-medium text-stone-700 truncate flex-1 min-w-0 text-left py-1 rounded-lg hover:bg-stone-50"
-              aria-label={t('taskScreen.editListNameTap')}
-            >
-              {list.name}
-            </button>
-            {!isEmpty && isSingle && (
+            <div className="flex items-center gap-2 px-4 pt-3 pb-2">
               <button
                 type="button"
-                onClick={() => setShowTaskTimes((v) => !v)}
-                className="p-1.5 rounded-lg border border-stone-200 text-stone-500 hover:bg-stone-50 hover:text-stone-700 shrink-0 flex items-center justify-center"
-                aria-pressed={showTaskTimes}
-                aria-label={
-                  showTaskTimes
-                    ? t('taskScreen.lastCompletedHide')
-                    : t('taskScreen.lastCompletedShow')
-                }
+                onClick={onBack}
+                className="p-2 -ml-1 text-stone-500 hover:text-stone-700 shrink-0"
+                aria-label={t('taskScreen.back')}
               >
-                <ClockToggleBadge active={showTaskTimes} />
+                ←
               </button>
-            )}
-            <div className="inline-flex shrink-0 items-center rounded-lg border border-stone-200 bg-stone-50/80 p-0.5">
               <button
                 type="button"
-                onClick={() => {
-                  cancelListNameEdit()
-                  setShowCompletionHistory(true)
-                }}
-                className="rounded-md px-2 py-1 text-xs font-medium text-stone-600 transition-colors hover:bg-white hover:text-stone-800"
+                onClick={startListNameEdit}
+                className="min-w-0 flex-1 truncate rounded-lg py-1 text-left text-base font-medium text-stone-700 hover:bg-stone-50"
+                aria-label={t('taskScreen.editListNameTap')}
               >
-                {t('taskScreen.completedTasks')}
+                {list.name}
               </button>
             </div>
-            <LanguageSwitcher className="shrink-0" />
-            <button
-              type="button"
-              onClick={startListNameEdit}
-              className="p-2 text-stone-400 hover:text-stone-700 shrink-0 rounded-lg flex items-center justify-center"
-              aria-label={t('taskScreen.editListName')}
-            >
-              <PencilIcon className="h-5 w-5" />
-            </button>
+            <div className="flex flex-wrap items-center justify-end gap-2 px-4 pb-3 pt-1">
+              <div className="inline-flex shrink-0 items-center rounded-lg border border-stone-200 bg-stone-50/80 p-0.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    cancelListNameEdit()
+                    setShowCompletionHistory(true)
+                  }}
+                  className="rounded-md px-2 py-1 text-xs font-medium text-stone-600 transition-colors hover:bg-white hover:text-stone-800"
+                >
+                  {t('taskScreen.completedTasks')}
+                </button>
+              </div>
+              <LanguageSwitcher className="shrink-0" />
+              <button
+                type="button"
+                onClick={startListNameEdit}
+                className="flex shrink-0 items-center justify-center rounded-lg p-2 text-stone-400 hover:text-stone-700"
+                aria-label={t('taskScreen.editListName')}
+              >
+                <PencilIcon className="h-5 w-5" />
+              </button>
+              {!isEmpty && isSingle && (
+                <button
+                  type="button"
+                  onClick={() => setShowTaskTimes((v) => !v)}
+                  className="flex shrink-0 items-center justify-center rounded-lg border border-stone-200 p-1.5 text-stone-500 hover:bg-stone-50 hover:text-stone-700"
+                  aria-pressed={showTaskTimes}
+                  aria-label={
+                    showTaskTimes
+                      ? t('taskScreen.lastCompletedHide')
+                      : t('taskScreen.lastCompletedShow')
+                  }
+                >
+                  <ClockToggleBadge active={showTaskTimes} />
+                </button>
+              )}
+            </div>
           </>
         )}
       </header>
