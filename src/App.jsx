@@ -22,8 +22,8 @@ export default function App() {
   const showTaskScreen = activeListId && activeList
   return (
     <LocaleProvider>
-      <div className="flex min-h-dvh flex-col bg-blue-600 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
-        <div className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col overflow-hidden rounded-lg bg-white shadow-sm">
+      <div className="flex min-h-dvh flex-col items-center bg-blue-600 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
+        <div className="flex w-full min-w-0 max-w-[1200px] flex-1 flex-col overflow-hidden rounded-lg bg-white shadow-sm">
           {showHelp ? (
             <HelpGuide onClose={() => setShowHelp(false)} />
           ) : showTaskScreen ? (
