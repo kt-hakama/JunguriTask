@@ -49,7 +49,7 @@ export const messages = {
       backToTaskScreenAria: 'タスク画面に戻る',
       clearAllCompletionHistory: '完了済タスクの記録をすべて削除',
       clearAllCompletionHistoryConfirm:
-        'このグループの完了の記録をすべて削除しますか？',
+        'この一覧の完了済タスクの記録をすべて削除しますか？',
       clearAllCompletionHistoryNote: 'いまのタスク一覧は消えません。',
     },
     task: {
@@ -113,7 +113,7 @@ export const messages = {
       backToTaskScreenAria: 'Back to task screen',
       clearAllCompletionHistory: 'Clear all completed-task records',
       clearAllCompletionHistoryConfirm:
-        'Remove all completion records for this group?',
+        'Remove all completed-task records shown in this list?',
       clearAllCompletionHistoryNote: 'Your current task list will not change.',
     },
     task: {
