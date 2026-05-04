@@ -7,7 +7,15 @@ import { PencilIcon, TrashIcon } from './icons'
 
 const MAX_LISTS = 3
 
-export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }) {
+export default function ListSelection({
+  lists,
+  setData,
+  onOpenList,
+  onOpenHelp,
+  pendingTaskScreenListId,
+  onGroupCreated,
+  onDismissPending,
+}) {
   const { t } = useLocale()
   const [editingId, setEditingId] = useState(null)
   const [editName, setEditName] = useState('')
@@ -17,12 +25,13 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
   const handleCreateList = () => {
     if (lists.length >= MAX_LISTS) return
     const name = newListName.trim() || t('listSelection.defaultListName')
+    const newId = generateId()
     setData((prev) => ({
       ...prev,
       lists: [
         ...prev.lists,
         {
-          id: generateId(),
+          id: newId,
           name,
           tasks: [],
           completionLog: [],
@@ -30,9 +39,11 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
       ],
     }))
     setNewListName('')
+    onGroupCreated(newId)
   }
 
   const handleDeleteList = (listId) => {
+    if (listId === pendingTaskScreenListId) onDismissPending()
     setData((prev) => ({
       ...prev,
       lists: prev.lists.filter((l) => l.id !== listId),
@@ -58,6 +69,7 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
   }
 
   const handleReset = () => {
+    onDismissPending()
     resetAllData(setData)
     setShowResetConfirm(false)
   }
@@ -109,6 +121,7 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
             ) : (
               <div className="flex items-center">
                 <button
+                  type="button"
                   onClick={() => onOpenList(list.id)}
                   className="flex-1 px-5 py-4 text-left text-base text-stone-800 transition-opacity duration-150 hover:opacity-75"
                 >
@@ -132,6 +145,21 @@ export default function ListSelection({ lists, setData, onOpenList, onOpenHelp }
                     <TrashIcon className="h-5 w-5" />
                   </button>
                 </div>
+              </div>
+            )}
+            {pendingTaskScreenListId === list.id && editingId !== list.id && (
+              <div className="border-t border-stone-100 bg-stone-50/90 px-4 py-3">
+                <p className="m-0 mb-2 text-xs leading-snug text-stone-600">
+                  {t('listSelection.openTaskScreenHint')}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => onOpenList(list.id)}
+                  className="w-full rounded-xl bg-stone-800 py-2.5 text-sm font-medium text-white transition-colors hover:bg-stone-700"
+                  aria-label={`${list.name} — ${t('listSelection.openTaskScreen')}`}
+                >
+                  {t('listSelection.openTaskScreen')}
+                </button>
               </div>
             )}
           </div>

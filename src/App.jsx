@@ -9,8 +9,12 @@ export default function App() {
   const [data, setData] = useLocalStorage()
   const [activeListId, setActiveListId] = useState(null)
   const [showHelp, setShowHelp] = useState(false)
+  const [pendingTaskScreenListId, setPendingTaskScreenListId] = useState(null)
 
-  const handleOpenList = (listId) => setActiveListId(listId)
+  const handleOpenList = (listId) => {
+    setPendingTaskScreenListId(null)
+    setActiveListId(listId)
+  }
   const handleBack = () => setActiveListId(null)
 
   const activeList = data.lists.find((l) => l.id === activeListId)
@@ -38,6 +42,9 @@ export default function App() {
               setData={setData}
               onOpenList={handleOpenList}
               onOpenHelp={() => setShowHelp(true)}
+              pendingTaskScreenListId={pendingTaskScreenListId}
+              onGroupCreated={setPendingTaskScreenListId}
+              onDismissPending={() => setPendingTaskScreenListId(null)}
             />
           )}
         </div>

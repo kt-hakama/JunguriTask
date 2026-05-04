@@ -29,6 +29,8 @@ export const messages = {
       deleteAllData: 'すべてのデータを削除',
       resetConfirm: 'すべてのグループとタスクが削除されます。よろしいですか？',
       defaultListName: '新しいグループ',
+      openTaskScreenHint: '次の画面でタスクを追加できます。',
+      openTaskScreen: 'タスク画面を開く',
     },
     taskScreen: {
       back: '戻る',
@@ -94,6 +96,8 @@ export const messages = {
       deleteAllData: 'Delete all data',
       resetConfirm: 'All groups and tasks will be deleted. Are you sure?',
       defaultListName: 'New group',
+      openTaskScreenHint: 'Add tasks on the next screen.',
+      openTaskScreen: 'Open task screen',
     },
     taskScreen: {
       back: 'Back',
